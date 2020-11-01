@@ -3,10 +3,6 @@ import { throwIfAlreadyLoaded } from '@core';
 import { DelonMockModule } from '@delon/mock';
 import { AlainThemeModule } from '@delon/theme';
 import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
-
-// Please refer to: https://ng-alain.com/docs/global-config
-// #region NG-ALAIN Config
-
 import { DelonACLModule } from '@delon/acl';
 
 const alainConfig: AlainConfig = {
@@ -50,20 +46,13 @@ if (!environment.production) {
 //   deps: [ReuseTabService],
 // } as any);
 
-// #endregion
-
-// #endregion
-
 // Please refer to: https://ng.ant.design/docs/global-config/en#how-to-use
 // #region NG-ZORRO Config
-
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 
 const ngZorroConfig: NzConfig = {};
 
 const zorroProvides = [{ provide: NZ_CONFIG, useValue: ngZorroConfig }];
-
-// #endregion
 
 @NgModule({
   imports: [...alainModules],

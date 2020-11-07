@@ -1,0 +1,46 @@
+<page-header></page-header>
+<button nz-button (click)="addRow()" nzType="primary">Add</button>
+<br />
+<br />
+<nz-table #editRowTable nzBordered [nzData]="listOfData" nzTableLayout="fixed">
+  <thead>
+    <tr>
+      <th>章节ID</th>
+      <th>章节名称</th>
+      <th>章节介绍</th>
+      <th>课程ID</th>
+      <th>创建时间</th>
+      <th>修改时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
+        <td>{{ data.id }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.courseId }}</td>
+        <td>{{ data.createdAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+        <td>{{ data.updatedAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+        <td>
+          <a (click)="startEdit(data.id)" class="save">编辑</a>
+          <a (click)="deleteRow(data.id)">删除</a>
+        </td>
+      </ng-container>
+      <ng-template #editTemplate>
+        <td>{{ data.id }}</td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.name" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.description" /></td>
+        <td><input type="number" nz-input [(ngModel)]="editCache[data.id].data.courseId" /></td>
+        <!-- <td>{{ data.courseId }}</td> -->
+        <td>{{ data.createdAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+        <td>{{ data.updatedAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+        <td>
+          <a (click)="saveEdit(data.id)" class="save">保存</a>
+          <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.id)">取消</a>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</nz-table>

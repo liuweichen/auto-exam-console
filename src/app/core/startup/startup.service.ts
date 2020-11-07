@@ -77,18 +77,18 @@ export class StartupService {
                 children: [
                   {
                     text: 'Courses',
-                    link: '/courses',
+                    link: '/teacher/courses',
                     icon: { type: 'icon', value: 'appstore' },
                   },
                   {
                     text: 'Chapters',
-                    link: '/chapters',
+                    link: '/teacher/chapters',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
                   },
                   {
                     text: 'Questions',
-                    link: '/questions',
+                    link: '/teacher/questions',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
                   },

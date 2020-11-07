@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { HttpService } from 'src/app/core/http/http.service';
 
 interface Question {
   id: number;
@@ -18,7 +19,7 @@ interface Question {
   styleUrls: ['./question.component.less'],
 })
 export class TeacherQuestionComponent implements OnInit {
-  constructor(private http: _HttpClient, public msg: NzMessageService) {}
+  constructor(private http: HttpService, public msg: NzMessageService) {}
 
   editCache: { [key: string]: { edit: boolean; data: Question } } = {};
   listOfData: Question[] = [];
@@ -47,14 +48,14 @@ export class TeacherQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get(`apiserver/teachers/1303/questions?chapter_id=1153`).subscribe((courses) => {
+    this.http.getQuestions(1153).subscribe((courses) => {
       this.listOfData = courses.content;
       this.updateEditCache();
     });
   }
 
   deleteRow(id: number): void {
-    this.http.delete(`apiserver/teachers/1303/questions/${id}`).subscribe(() => {
+    this.http.deleteQuestion(id).subscribe(() => {
       this.listOfData = this.listOfData.filter((item) => item.id !== id);
       delete this.editCache[id];
       this.msg.success('删除成功');

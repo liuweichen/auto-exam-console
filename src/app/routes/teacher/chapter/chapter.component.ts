@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { HttpService } from 'src/app/core/http/http.service';
 interface Chapter {
   id: number;
   name: string;
@@ -16,7 +17,7 @@ interface Chapter {
   styleUrls: ['./chapter.component.less'],
 })
 export class TeacherChapterComponent implements OnInit {
-  constructor(private http: _HttpClient, public msg: NzMessageService) {}
+  constructor(private http: HttpService, public msg: NzMessageService) {}
 
   editCache: { [key: string]: { edit: boolean; data: Chapter } } = {};
   listOfData: Chapter[] = [];
@@ -34,7 +35,7 @@ export class TeacherChapterComponent implements OnInit {
   }
 
   saveEdit(id: number): void {
-    this.http.put(`apiserver/teachers/1303/chapters/${id}`, this.editCache[id].data).subscribe(() => {
+    this.http.updateChapter(id, this.editCache[id].data).subscribe(() => {
       const index = this.listOfData.findIndex((item) => item.id === id);
       this.editCache[id].data.updatedAt = new Date(Date.now());
       Object.assign(this.listOfData[index], this.editCache[id].data);
@@ -52,14 +53,14 @@ export class TeacherChapterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get(`apiserver/teachers/1303/chapters?course_id=1151`).subscribe((courses) => {
+    this.http.getChapters(1151).subscribe((courses) => {
       this.listOfData = courses;
       this.updateEditCache();
     });
   }
 
   deleteRow(id: number): void {
-    this.http.delete(`apiserver/teachers/1303/chapters/${id}`).subscribe(() => {
+    this.http.deleteChapter(id).subscribe(() => {
       this.listOfData = this.listOfData.filter((item) => item.id !== id);
       delete this.editCache[id];
       this.msg.success('删除成功');

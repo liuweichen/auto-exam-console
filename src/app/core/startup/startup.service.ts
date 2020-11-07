@@ -1,14 +1,15 @@
-import { Injectable, Injector, Inject } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { MenuService, SettingsService, TitleService, ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
-import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { Inject, Injectable } from '@angular/core';
 import { ACLService } from '@delon/acl';
+import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService, _HttpClient } from '@delon/theme';
 import { TranslateService } from '@ngx-translate/core';
+import { catchError } from 'rxjs/operators';
 import { I18NService } from '../i18n/i18n.service';
 
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICONS } from '../../../style-icons';
 import { ICONS_AUTO } from '../../../style-icons-auto';
+import { HttpService } from '../http/http.service';
 
 /**
  * Used for application startup
@@ -26,7 +27,7 @@ export class StartupService {
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: _HttpClient,
-    private injector: Injector,
+    private http: HttpService,
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
     this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`).subscribe((langData) => {
@@ -45,7 +46,7 @@ export class StartupService {
     this.titleService.suffix = app.name;
   }
 
-  private viaHttp(resolve: any, reject: any) {
+  private viaHttp(resolve: any, reject: any): void {
     this.httpClient
       .post('apiserver/token/refresh')
       .pipe(
@@ -67,27 +68,28 @@ export class StartupService {
           res.avatar = './assets/tmp/img/avatar.jpg';
           res.email = 'xx@qq.com';
           this.settingService.setUser(res);
+          this.http.setUserId(userInfo.userId);
 
           let menu;
-          if (userInfo.role == 'teacher') {
+          if (userInfo.role === 'teacher') {
             menu = [
               {
-                text: 'Main',
+                text: 'teacher',
                 group: true,
                 children: [
                   {
-                    text: 'Courses',
+                    text: 'courses',
                     link: '/teacher/courses',
                     icon: { type: 'icon', value: 'appstore' },
                   },
                   {
-                    text: 'Chapters',
+                    text: 'chapters',
                     link: '/teacher/chapters',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
                   },
                   {
-                    text: 'Questions',
+                    text: 'qestions',
                     link: '/teacher/questions',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
@@ -95,30 +97,30 @@ export class StartupService {
                 ],
               },
             ];
-          } else if (userInfo.role == 'student') {
+          } else if (userInfo.role === 'student') {
             menu = [
               {
-                text: 'Main',
+                text: 'student',
                 group: true,
                 children: [
                   {
-                    text: 'Teachers',
+                    text: 'teachers',
                     link: '/teachers',
                     icon: { type: 'icon', value: 'appstore' },
                   },
                   {
-                    text: 'Courses',
+                    text: 'courses',
                     link: '/courses',
                     icon: { type: 'icon', value: 'appstore' },
                   },
                   {
-                    text: 'Chapters',
+                    text: 'chapters',
                     link: '/chapters',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
                   },
                   {
-                    text: 'Questions',
+                    text: 'questions',
                     link: '/questions',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,

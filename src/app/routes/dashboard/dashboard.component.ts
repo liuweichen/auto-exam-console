@@ -8,5 +8,5 @@ import { _HttpClient } from '@delon/theme';
 export class DashboardComponent implements OnInit {
   constructor(private http: _HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 }

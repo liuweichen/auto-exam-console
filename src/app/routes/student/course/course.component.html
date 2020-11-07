@@ -1,0 +1,23 @@
+<page-header></page-header>
+<nz-table #editRowTable nzBordered [nzData]="listOfData" nzTableLayout="fixed">
+  <thead>
+    <tr>
+      <th>课程ID</th>
+      <th>课程名称</th>
+      <th>课程介绍</th>
+      <th>老师ID</th>
+      <th>创建时间</th>
+      <th>修改时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <td>{{ data.id }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.description }}</td>
+      <td>{{ data.teacherId }}</td>
+      <td>{{ data.createdAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+      <td>{{ data.updatedAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+    </tr>
+  </tbody>
+</nz-table>

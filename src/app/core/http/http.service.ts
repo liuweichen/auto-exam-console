@@ -46,4 +46,16 @@ export class HttpService {
   deleteQuestion(id: number): Observable<any> {
     return this.http.delete(`apiserver/teachers/${this.userId}/questions/${id}`);
   }
+
+  studentGetTeachers(): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/teachers`);
+  }
+
+  studentGetCourses(id: number): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/courses?teacher_id=${id}`);
+  }
+
+  studentGetChapters(id: number): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/chapters?course_id=${id}`);
+  }
 }

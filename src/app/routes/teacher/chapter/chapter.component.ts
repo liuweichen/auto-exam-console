@@ -2,14 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpService } from 'src/app/core/http/http.service';
-interface Chapter {
-  id: number;
-  name: string;
-  description: string;
-  courseId: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Chapter } from 'src/app/shared/model/Chapter';
 
 @Component({
   selector: 'app-teacher-chapter',

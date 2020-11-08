@@ -67,6 +67,7 @@ export class StartupService {
           res.name = userInfo.userName;
           res.avatar = './assets/tmp/img/avatar.jpg';
           res.email = 'xx@qq.com';
+          res.id = userInfo.userId;
           this.settingService.setUser(res);
           this.http.setUserId(userInfo.userId);
 
@@ -74,22 +75,22 @@ export class StartupService {
           if (userInfo.role === 'teacher') {
             menu = [
               {
-                text: 'teacher',
+                text: '导航栏',
                 group: true,
                 children: [
                   {
-                    text: 'courses',
+                    text: '课程',
                     link: '/teacher/courses',
                     icon: { type: 'icon', value: 'appstore' },
                   },
                   {
-                    text: 'chapters',
+                    text: '章节',
                     link: '/teacher/chapters',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
                   },
                   {
-                    text: 'questions',
+                    text: '试题',
                     link: '/teacher/questions',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
@@ -100,21 +101,21 @@ export class StartupService {
           } else if (userInfo.role === 'student') {
             menu = [
               {
-                text: 'student',
+                text: '导航栏',
                 group: true,
                 children: [
                   {
-                    text: 'teachers',
+                    text: '老师',
                     link: '/student/teachers',
                     icon: { type: 'icon', value: 'appstore' },
                   },
                   {
-                    text: 'courses',
+                    text: '课程',
                     link: '/student/courses',
                     icon: { type: 'icon', value: 'rocket' },
                   },
                   {
-                    text: 'chapters',
+                    text: '章节',
                     link: '/student/chapters',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,

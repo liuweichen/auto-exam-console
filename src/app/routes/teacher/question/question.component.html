@@ -1,5 +1,8 @@
 <page-header></page-header>
-<button nz-button (click)="addRow()" nzType="primary">Add</button>
+<button nz-button (click)="addRow()" [nzType]="'primary'">
+  <i nz-icon nzType="plus"></i>
+  <span>新建</span>
+</button>
 <br />
 <br />
 <nz-table #editRowTable nzBordered [nzData]="listOfData" nzTableLayout="fixed">

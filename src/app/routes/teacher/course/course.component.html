@@ -37,7 +37,7 @@
         <td>{{ data.updatedAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
         <td>
           <a (click)="saveEdit(data.id)" class="save">保存</a>
-          <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.id)">取消</a>
+          <a (click)="cancelEdit(data.id)">取消</a>
         </td>
       </ng-template>
     </tr>

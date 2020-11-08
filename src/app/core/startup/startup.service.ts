@@ -89,7 +89,7 @@ export class StartupService {
                     shortcutRoot: true,
                   },
                   {
-                    text: 'qestions',
+                    text: 'questions',
                     link: '/teacher/questions',
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,

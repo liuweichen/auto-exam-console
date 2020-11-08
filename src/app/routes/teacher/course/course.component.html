@@ -5,12 +5,26 @@
 <nz-table #editRowTable nzBordered [nzData]="listOfData" nzTableLayout="fixed">
   <thead>
     <tr>
-      <th>课程ID</th>
+      <th [nzSortOrder]="courseIdColumn.sortOrder" [nzSortFn]="courseIdColumn.sortFn" [nzSortDirections]="courseIdColumn.sortDirections">
+        课程ID
+      </th>
       <th>课程名称</th>
       <th>课程介绍</th>
       <th>老师ID</th>
-      <th>创建时间</th>
-      <th>修改时间</th>
+      <th
+        [nzSortOrder]="createTimeColumn.sortOrder"
+        [nzSortFn]="createTimeColumn.sortFn"
+        [nzSortDirections]="createTimeColumn.sortDirections"
+      >
+        创建时间
+      </th>
+      <th
+        [nzSortOrder]="updateTimeColumn.sortOrder"
+        [nzSortFn]="updateTimeColumn.sortFn"
+        [nzSortDirections]="updateTimeColumn.sortDirections"
+      >
+        修改时间
+      </th>
       <th>操作</th>
     </tr>
   </thead>

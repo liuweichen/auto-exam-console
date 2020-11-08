@@ -27,8 +27,8 @@ export class HttpService {
     return this.http.put(`apiserver/teachers/${this.userId}/courses/${id}`, body);
   }
 
-  getChapters(id: number): Observable<any> {
-    return this.http.get(`apiserver/teachers/${this.userId}/chapters?course_id=${id}`);
+  getChapters(): Observable<any> {
+    return this.http.get(`apiserver/teachers/${this.userId}/chapters`);
   }
 
   deleteChapter(id: number): Observable<any> {

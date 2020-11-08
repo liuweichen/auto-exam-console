@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Course } from 'src/app/shared/model/Course';
+import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
 
 @Component({
   selector: 'app-teacher-course',
@@ -13,7 +14,37 @@ export class TeacherCourseComponent implements OnInit {
 
   editCache: { [key: string]: { edit: boolean; data: Course } } = {};
   listOfData: Course[] = [];
-
+  courseIdColumn: ColumnSortAndFilter = {
+    name: '课程ID',
+    sortOrder: null,
+    sortFn: (a: Course, b: Course) => a.id - b.id,
+    sortDirections: ['ascend', 'descend', null],
+    filterMultiple: null,
+    listOfFilter: null,
+    filterFn: null,
+  };
+  createTimeColumn: ColumnSortAndFilter = {
+    name: '创建时间',
+    sortOrder: null,
+    sortFn: (a: Course, b: Course) => {
+      return new Date(a.createdAt).getSeconds() - new Date(b.createdAt).getSeconds();
+    },
+    sortDirections: ['ascend', 'descend', null],
+    filterMultiple: null,
+    listOfFilter: null,
+    filterFn: null,
+  };
+  updateTimeColumn: ColumnSortAndFilter = {
+    name: '修改时间',
+    sortOrder: null,
+    sortFn: (a: Course, b: Course) => {
+      return new Date(a.updatedAt).getSeconds() - new Date(b.updatedAt).getSeconds();
+    },
+    sortDirections: ['ascend', 'descend', null],
+    filterMultiple: null,
+    listOfFilter: null,
+    filterFn: null,
+  };
   startEdit(id: string): void {
     this.editCache[id].edit = true;
   }

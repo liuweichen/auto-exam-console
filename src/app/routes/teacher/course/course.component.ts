@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Course } from 'src/app/shared/model/Course';
 import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
+import { TeacherCreateCourseComponent } from './create/create.component';
 
 @Component({
   selector: 'app-teacher-course',
@@ -10,7 +12,7 @@ import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
   styleUrls: ['./course.component.less'],
 })
 export class TeacherCourseComponent implements OnInit {
-  constructor(private http: HttpService, public msg: NzMessageService) {}
+  constructor(private http: HttpService, public msg: NzMessageService, private modal: NzModalService) {}
 
   editCache: { [key: string]: { edit: boolean; data: Course } } = {};
   listOfData: Course[] = [];
@@ -90,5 +92,13 @@ export class TeacherCourseComponent implements OnInit {
     });
   }
 
-  addRow(): void {}
+  addRow(): void {
+    const modal = this.modal.create({
+      nzContent: TeacherCreateCourseComponent,
+      nzComponentParams: {
+        title: 'title in component',
+        subtitle: 'component sub title，will be changed after 2 sec',
+      },
+    });
+  }
 }

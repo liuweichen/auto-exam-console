@@ -1,0 +1,11 @@
+<div>
+  <h2>{{ title }}</h2>
+  <h4>{{ subtitle }}</h4>
+  <p>
+    <span>Get Modal instance in component</span>
+  </p>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="destroyModal()">Custom Callback</button>
+    <button nz-button nzType="primary" (click)="destroyModal()">Custom Submit</button>
+  </div>
+</div>

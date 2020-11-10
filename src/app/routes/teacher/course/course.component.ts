@@ -78,10 +78,7 @@ export class TeacherCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.getCourses().subscribe((courses) => {
-      this.listOfData = courses;
-      this.updateEditCache();
-    });
+    this.refresh();
   }
 
   deleteRow(id: number): void {
@@ -95,10 +92,16 @@ export class TeacherCourseComponent implements OnInit {
   addRow(): void {
     const modal = this.modal.create({
       nzContent: TeacherCreateCourseComponent,
-      nzComponentParams: {
-        title: 'title in component',
-        subtitle: 'component sub title，will be changed after 2 sec',
-      },
+    });
+    modal.afterClose.subscribe(() => {
+      this.refresh();
+    });
+  }
+
+  private refresh(): void {
+    this.http.getCourses().subscribe((courses) => {
+      this.listOfData = courses;
+      this.updateEditCache();
     });
   }
 }

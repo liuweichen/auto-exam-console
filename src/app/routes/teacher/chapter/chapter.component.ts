@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Chapter } from 'src/app/shared/model/Chapter';
 import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
+import { TeacherCreateChapterComponent } from './create/create.component';
 
 @Component({
   selector: 'app-teacher-chapter',
@@ -10,7 +12,7 @@ import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
   styleUrls: ['./chapter.component.less'],
 })
 export class TeacherChapterComponent implements OnInit {
-  constructor(private http: HttpService, public msg: NzMessageService) {}
+  constructor(private http: HttpService, public msg: NzMessageService, private modal: NzModalService) {}
 
   editCache: { [key: string]: { edit: boolean; data: Chapter } } = {};
   listOfData: Chapter[] = [];
@@ -92,10 +94,7 @@ export class TeacherChapterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.getChapters().subscribe((courses) => {
-      this.listOfData = courses;
-      this.updateEditCache();
-    });
+    this.refresh();
   }
 
   deleteRow(id: number): void {
@@ -106,5 +105,19 @@ export class TeacherChapterComponent implements OnInit {
     });
   }
 
-  addRow(): void {}
+  addRow(): void {
+    const modal = this.modal.create({
+      nzContent: TeacherCreateChapterComponent,
+    });
+    modal.afterClose.subscribe(() => {
+      this.refresh();
+    });
+  }
+
+  private refresh(): void {
+    this.http.getChapters().subscribe((courses) => {
+      this.listOfData = courses;
+      this.updateEditCache();
+    });
+  }
 }

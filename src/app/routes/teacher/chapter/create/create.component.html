@@ -1,0 +1,19 @@
+<div>
+  <h2>创建章节</h2>
+  <span>课程编号 :</span>
+  <br />
+  <input type="number" nz-input placeholder="课程编号" [(ngModel)]="courseId" />
+  <br />
+  <br />
+  <span>章节名称 :</span>
+  <br />
+  <input type="text" nz-input placeholder="章节名称" [(ngModel)]="name" />
+  <br />
+  <br />
+  <span>章节介绍 :</span>
+  <input type="text" nz-input placeholder="章节介绍" [(ngModel)]="description" />
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="cancle()">取消</button>
+    <button nz-button nzType="primary" (click)="ok()">确认</button>
+  </div>
+</div>

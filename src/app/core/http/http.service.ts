@@ -27,6 +27,10 @@ export class HttpService {
     return this.http.put(`apiserver/teachers/${this.userId}/courses/${id}`, body);
   }
 
+  createCourse(body: any): Observable<any> {
+    return this.http.post(`apiserver/teachers/${this.userId}/courses`, body);
+  }
+
   getChapters(): Observable<any> {
     return this.http.get(`apiserver/teachers/${this.userId}/chapters`);
   }
@@ -37,6 +41,10 @@ export class HttpService {
 
   updateChapter(id: number, body: any): Observable<any> {
     return this.http.put(`apiserver/teachers/${this.userId}/chapters/${id}`, body);
+  }
+
+  crreateChapter(body: any): Observable<any> {
+    return this.http.post(`apiserver/teachers/${this.userId}/chapters`, body);
   }
 
   getQuestions(id: number): Observable<any> {

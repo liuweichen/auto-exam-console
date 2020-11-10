@@ -1,11 +1,14 @@
 <div>
-  <h2>{{ title }}</h2>
-  <h4>{{ subtitle }}</h4>
-  <p>
-    <span>Get Modal instance in component</span>
-  </p>
+  <h2>创建课程</h2>
+  <span>课程名称 :</span>
+  <br />
+  <input type="text" nz-input placeholder="课程名称" [(ngModel)]="name" />
+  <br />
+  <br />
+  <span>课程介绍 :</span>
+  <input type="text" nz-input placeholder="课程介绍" [(ngModel)]="description" />
   <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="destroyModal()">Custom Callback</button>
-    <button nz-button nzType="primary" (click)="destroyModal()">Custom Submit</button>
+    <button nz-button nzType="default" (click)="cancle()">取消</button>
+    <button nz-button nzType="primary" (click)="ok()">确认</button>
   </div>
 </div>

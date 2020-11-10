@@ -5,10 +5,11 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/core/http/http.service';
 
 @Component({
-  selector: 'app-teacher-create-course',
+  selector: 'app-teacher-create-chapter',
   templateUrl: './create.component.html',
 })
-export class TeacherCreateCourseComponent implements OnInit {
+export class TeacherCreateChapterComponent implements OnInit {
+  courseId: number;
   name: string;
   description: string;
 
@@ -17,7 +18,8 @@ export class TeacherCreateCourseComponent implements OnInit {
 
   ok(): void {
     this.http
-      .createCourse({
+      .crreateChapter({
+        courseId: this.courseId,
         name: this.name,
         description: this.description,
       })

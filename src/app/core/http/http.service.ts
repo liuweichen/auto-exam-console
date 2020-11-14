@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { Observable } from 'rxjs';
@@ -49,6 +50,27 @@ export class HttpService {
 
   getQuestions(id: number): Observable<any> {
     return this.http.get(`apiserver/teachers/${this.userId}/questions?chapter_id=${id}`);
+  }
+
+  getQuestionPage(
+    pageIndex: number,
+    pageSize: number,
+    sortField: string | null,
+    sortOrder: string | null,
+    filters: Array<{ key: string; value: string }>,
+  ): Observable<any> {
+    let params = new HttpParams()
+      .append('current_page', `${pageIndex}`)
+      .append('page_size', `${pageSize}`)
+      .append('sort_field', `${sortField === null ? 'createdAt' : sortField}`)
+      .append('sort_order', `${sortOrder === 'ascend' ? 'asc' : 'desc'}`);
+    console.log(filters);
+    filters.forEach((filter) => {
+      if (filter.value !== null) {
+        params = params.append(filter.key, filter.value);
+      }
+    });
+    return this.http.get(`apiserver/teachers/${this.userId}/questions`, params);
   }
 
   deleteQuestion(id: number): Observable<any> {

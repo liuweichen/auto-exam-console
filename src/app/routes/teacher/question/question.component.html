@@ -5,15 +5,26 @@
 </button>
 <br />
 <br />
-<nz-table #editRowTable nzBordered [nzData]="listOfData" nzTableLayout="fixed">
+<nz-table
+  nzShowSizeChanger
+  [nzData]="listOfData"
+  [nzFrontPagination]="false"
+  [nzLoading]="loading"
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  (nzQueryParams)="onQueryParamsChange($event)"
+  nzTableLayout="fixed"
+  #editRowTable
+>
   <thead>
     <tr>
       <th>试题ID</th>
-      <th>试题类型</th>
+      <th nzColumnKey="type" [nzFilters]="filterType" [nzFilterMultiple]="false" [nzFilterFn]="true">试题类型</th>
       <th>试题内容</th>
-      <th>章节ID</th>
-      <th>创建时间</th>
-      <th>修改时间</th>
+      <th nzColumnKey="chapter_id" [nzFilters]="filterChapterId" [nzFilterMultiple]="false" [nzFilterFn]="true">章节ID</th>
+      <th nzColumnKey="createdAt" [nzSortFn]="true">创建时间</th>
+      <th nzColumnKey="updatedAt" [nzSortFn]="true">修改时间</th>
       <th>操作</th>
     </tr>
   </thead>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { HttpService } from 'src/app/core/http/http.service';
 
 interface Question {
@@ -20,8 +21,42 @@ interface Question {
 export class TeacherQuestionComponent implements OnInit {
   constructor(private http: HttpService, public msg: NzMessageService) {}
 
-  editCache: { [key: string]: { edit: boolean; data: Question } } = {};
+  total = 1;
   listOfData: Question[] = [];
+  loading = true;
+  pageSize = 10;
+  pageIndex = 1;
+  filterType = [
+    { text: '1', value: 1 },
+    { text: '2', value: 2 },
+  ];
+  filterChapterId = [];
+
+  editCache: { [key: string]: { edit: boolean; data: Question } } = {};
+
+  loadDataFromServer(
+    pageIndex: number,
+    pageSize: number,
+    sortField: string | null,
+    sortOrder: string | null,
+    filter: Array<{ key: string; value: string }>,
+  ): void {
+    this.loading = true;
+    this.http.getQuestionPage(pageIndex, pageSize, sortField, sortOrder, filter).subscribe((data) => {
+      this.loading = false;
+      this.total = data.totalElements;
+      this.listOfData = data.content;
+      this.updateEditCache();
+    });
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams): void {
+    const { pageSize, pageIndex, sort, filter } = params;
+    const currentSort = sort.find((item) => item.value !== null);
+    const sortField = (currentSort && currentSort.key) || null;
+    const sortOrder = (currentSort && currentSort.value) || null;
+    this.loadDataFromServer(pageIndex, pageSize, sortField, sortOrder, filter);
+  }
 
   startEdit(id: string): void {
     this.editCache[id].edit = true;
@@ -38,6 +73,7 @@ export class TeacherQuestionComponent implements OnInit {
   saveEdit(id: number): void {}
 
   updateEditCache(): void {
+    this.editCache = {};
     this.listOfData.forEach((item) => {
       this.editCache[item.id] = {
         edit: false,
@@ -47,9 +83,10 @@ export class TeacherQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.getQuestions(1153).subscribe((courses) => {
-      this.listOfData = courses.content;
-      this.updateEditCache();
+    this.http.getChapters().subscribe((res) => {
+      this.filterChapterId = res.map((e) => {
+        return { text: e.id, value: e.id };
+      });
     });
   }
 

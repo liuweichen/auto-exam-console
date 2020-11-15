@@ -35,8 +35,8 @@
         <td>{{ data.type }}</td>
         <td>{{ data.content }}</td>
         <td>{{ data.chapterId }}</td>
-        <td>{{ data.createdAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
-        <td>{{ data.updatedAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+        <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
+        <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
         <td>
           <a (click)="startEdit(data.id)" class="save">编辑</a>
           <a (click)="deleteRow(data.id)">删除</a>
@@ -47,8 +47,8 @@
         <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.type" /></td>
         <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.content" /></td>
         <td>{{ data.chapterId }}</td>
-        <td>{{ data.createdAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
-        <td>{{ data.updatedAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+        <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
+        <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
         <td>
           <a (click)="saveEdit(data.id)" class="save">保存</a>
           <a (click)="cancelEdit(data.id)">取消</a>

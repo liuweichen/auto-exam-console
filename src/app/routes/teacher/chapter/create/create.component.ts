@@ -18,7 +18,7 @@ export class TeacherCreateChapterComponent implements OnInit {
 
   ok(): void {
     this.http
-      .crreateChapter({
+      .createChapter({
         courseId: this.courseId,
         name: this.name,
         description: this.description,

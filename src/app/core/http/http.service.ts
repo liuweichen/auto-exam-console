@@ -44,7 +44,7 @@ export class HttpService {
     return this.http.put(`apiserver/teachers/${this.userId}/chapters/${id}`, body);
   }
 
-  crreateChapter(body: any): Observable<any> {
+  createChapter(body: any): Observable<any> {
     return this.http.post(`apiserver/teachers/${this.userId}/chapters`, body);
   }
 
@@ -64,7 +64,6 @@ export class HttpService {
       .append('page_size', `${pageSize}`)
       .append('sort_field', `${sortField === null ? 'createdAt' : sortField}`)
       .append('sort_order', `${sortOrder === 'ascend' ? 'asc' : 'desc'}`);
-    console.log(filters);
     filters.forEach((filter) => {
       if (filter.value !== null) {
         params = params.append(filter.key, filter.value);
@@ -75,6 +74,10 @@ export class HttpService {
 
   deleteQuestion(id: number): Observable<any> {
     return this.http.delete(`apiserver/teachers/${this.userId}/questions/${id}`);
+  }
+
+  createQuestion(body: any): Observable<any> {
+    return this.http.post(`apiserver/teachers/${this.userId}/questions`, body);
   }
 
   studentGetTeachers(): Observable<any> {

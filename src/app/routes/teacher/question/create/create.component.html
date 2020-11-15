@@ -1,0 +1,29 @@
+<div>
+  <h2>创建试题</h2>
+  <span>试题类型 :</span>
+  <input type="number" nz-input placeholder="试题类型" [(ngModel)]="type" />
+  <br />
+  <br />
+  <span>试题题目 :</span>
+  <input type="text" nz-input placeholder="试题题目" [(ngModel)]="content" />
+  <br />
+  <br />
+  <span>试题解析 :</span>
+  <input type="text" nz-input placeholder="试题解析" [(ngModel)]="explanation" />
+  <br />
+  <br />
+  <span>章节编号 :</span>
+  <input type="number" nz-input placeholder="章节编号" [(ngModel)]="chapterId" />
+  <br />
+  <br />
+  <span>选项 :</span>
+  <div>
+    <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
+      <label nz-radio [nzValue]="i"><input type="text" placeholder="选项内容" nz-input [(ngModel)]="answer.content" /></label>
+    </nz-radio-group>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="cancle()">取消</button>
+    <button nz-button nzType="primary" (click)="ok()">确认</button>
+  </div>
+</div>

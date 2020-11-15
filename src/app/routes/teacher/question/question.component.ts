@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { HttpService } from 'src/app/core/http/http.service';
+import { TeacherCreateQuestionComponent } from './create/create.component';
 
 interface Question {
   id: number;
@@ -19,7 +21,7 @@ interface Question {
   styleUrls: ['./question.component.less'],
 })
 export class TeacherQuestionComponent implements OnInit {
-  constructor(private http: HttpService, public msg: NzMessageService) {}
+  constructor(private http: HttpService, public msg: NzMessageService, private modal: NzModalService) {}
 
   total = 1;
   listOfData: Question[] = [];
@@ -83,11 +85,7 @@ export class TeacherQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.getChapters().subscribe((res) => {
-      this.filterChapterId = res.map((e) => {
-        return { text: e.id, value: e.id };
-      });
-    });
+    this.refresh();
   }
 
   deleteRow(id: number): void {
@@ -98,5 +96,22 @@ export class TeacherQuestionComponent implements OnInit {
     });
   }
 
-  addRow(): void {}
+  addRow(): void {
+    const modal = this.modal.create({
+      nzContent: TeacherCreateQuestionComponent,
+    });
+    modal.afterClose.subscribe((res) => {
+      if (res?.data === 'ok') {
+        this.refresh();
+      }
+    });
+  }
+
+  private refresh(): void {
+    this.http.getChapters().subscribe((res) => {
+      this.filterChapterId = res.map((e) => {
+        return { text: e.id, value: e.id };
+      });
+    });
+  }
 }

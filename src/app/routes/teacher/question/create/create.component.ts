@@ -18,20 +18,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
   content: string;
   explanation: string;
   chapterId: number;
-  answerList: any[] = [
-    {
-      content: '1',
-    },
-    {
-      content: '2',
-    },
-    {
-      content: '3',
-    },
-    {
-      content: '4',
-    },
-  ];
+  answerList: any[] = [{}, {}, {}, {}];
 
   constructor(private modal: NzModalRef, private http: HttpService, public msg: NzMessageService, public router: Router) {}
   ngOnInit(): void {}
@@ -62,10 +49,11 @@ export class TeacherCreateQuestionComponent implements OnInit {
     const i = this.answerList.indexOf(item);
     this.answerList.splice(i, 1);
   }
+  removeLastInput(): void {
+    const i = this.answerList.length - 1;
+    this.answerList.splice(i, 1);
+  }
   addInput(): void {
-    this.answerList.push({
-      content: null,
-      isSelected: null,
-    });
+    this.answerList.push({});
   }
 }

@@ -19,8 +19,21 @@
   <span>选项 :</span>
   <div>
     <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
-      <label nz-radio [nzValue]="i"><input type="text" placeholder="选项内容" nz-input [(ngModel)]="answer.content" /></label>
+      <div style="float: left">
+        <label nz-radio [nzValue]="i"></label>
+        <input type="text" placeholder="选项内容" nz-input [(ngModel)]="answer.content" />
+      </div>
     </nz-radio-group>
+    <div>
+      <ul class="alain-default__nav">
+        <li class="alain-default__nav-item" (click)="addInput()">
+          <i nz-icon nzType="plus-circle" nzTheme="twotone"></i>
+        </li>
+        <li class="alain-default__nav-item" (click)="removeLastInput()">
+          <i nz-icon nzType="minus-circle" nzTheme="twotone"></i>
+        </li>
+      </ul>
+    </div>
   </div>
   <div *nzModalFooter>
     <button nz-button nzType="default" (click)="cancle()">取消</button>

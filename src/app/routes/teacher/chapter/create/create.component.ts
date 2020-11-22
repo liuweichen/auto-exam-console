@@ -7,6 +7,7 @@ import { HttpService } from 'src/app/core/http/http.service';
 @Component({
   selector: 'app-teacher-create-chapter',
   templateUrl: './create.component.html',
+  styleUrls: ['./create.component.less'],
 })
 export class TeacherCreateChapterComponent implements OnInit {
   courseId: number;

@@ -88,11 +88,11 @@ export class HttpService {
     return this.http.get(`apiserver/students/${this.userId}/teachers`);
   }
 
-  studentGetCourses(id: number): Observable<any> {
-    return this.http.get(`apiserver/students/${this.userId}/courses?teacher_id=${id}`);
+  studentGetCourses(): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/courses`);
   }
 
-  studentGetChapters(id: number): Observable<any> {
-    return this.http.get(`apiserver/students/${this.userId}/chapters?course_id=${id}`);
+  studentGetChapters(): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/chapters`);
   }
 }

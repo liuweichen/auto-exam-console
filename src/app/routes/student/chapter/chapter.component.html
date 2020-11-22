@@ -2,12 +2,35 @@
 <nz-table #editRowTable nzBordered [nzData]="listOfData" nzTableLayout="fixed">
   <thead>
     <tr>
-      <th>章节ID</th>
+      <th [nzSortOrder]="chapterIdColumn.sortOrder" [nzSortFn]="chapterIdColumn.sortFn" [nzSortDirections]="chapterIdColumn.sortDirections">
+        章节ID
+      </th>
       <th>章节名称</th>
       <th>章节介绍</th>
-      <th>课程ID</th>
-      <th>创建时间</th>
-      <th>修改时间</th>
+      <th
+        [nzSortOrder]="courseIdColumn.sortOrder"
+        [nzSortFn]="courseIdColumn.sortFn"
+        [nzSortDirections]="courseIdColumn.sortDirections"
+        [nzFilterMultiple]="courseIdColumn.filterMultiple"
+        [nzFilters]="courseIdColumn.listOfFilter"
+        [nzFilterFn]="courseIdColumn.filterFn"
+      >
+        课程ID
+      </th>
+      <th
+        [nzSortOrder]="createTimeColumn.sortOrder"
+        [nzSortFn]="createTimeColumn.sortFn"
+        [nzSortDirections]="createTimeColumn.sortDirections"
+      >
+        创建时间
+      </th>
+      <th
+        [nzSortOrder]="updateTimeColumn.sortOrder"
+        [nzSortFn]="updateTimeColumn.sortFn"
+        [nzSortDirections]="updateTimeColumn.sortDirections"
+      >
+        修改时间
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -16,8 +39,8 @@
       <td>{{ data.name }}</td>
       <td>{{ data.description }}</td>
       <td>{{ data.courseId }}</td>
-      <td>{{ data.createdAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
-      <td>{{ data.updatedAt | date: 'yyyy/MM/dd hh:mm:ss' }}</td>
+      <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
+      <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
     </tr>
   </tbody>
 </nz-table>

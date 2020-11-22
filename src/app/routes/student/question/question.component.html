@@ -1,0 +1,29 @@
+<page-header></page-header>
+<span>试题类型 :</span>
+<span>{{ question.type }}</span>
+<br />
+<br />
+<span>{{ question.id + ' 试题题目 :' }}</span>
+<br />
+<br />
+<div>
+  <span>{{ question.content }}</span>
+</div>
+<br />
+<br />
+<span>选项 :</span>
+<div>
+  <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
+    <label nz-radio [nzValue]="i" (click)="selectAnswer(answer)">{{ answer.content }} </label>
+  </nz-radio-group>
+</div>
+<br />
+<br />
+<div *ngIf="showRightAnswer">
+  <span>答案 :</span>
+  <div>
+    {{ rightAnster.content }}
+  </div>
+</div>
+<button nz-button nzType="default" (click)="lastQuestion()">上一题</button>
+<button nz-button nzType="primary" (click)="nextQuestion()">下一题</button>

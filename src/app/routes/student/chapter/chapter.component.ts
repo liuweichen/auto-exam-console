@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Chapter } from 'src/app/shared/model/Chapter';
 import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
@@ -8,7 +9,7 @@ import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
   templateUrl: './chapter.component.html',
 })
 export class StudentChapterComponent implements OnInit {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private router: Router) {}
   listOfData: Chapter[] = [];
   chapterIdColumn: ColumnSortAndFilter = {
     name: '章节ID',
@@ -34,7 +35,7 @@ export class StudentChapterComponent implements OnInit {
     name: '创建时间',
     sortOrder: null,
     sortFn: (a: Chapter, b: Chapter) => {
-      return new Date(a.createdAt).getSeconds() - new Date(b.createdAt).getSeconds();
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     },
     sortDirections: ['ascend', 'descend', null],
     filterMultiple: null,
@@ -45,13 +46,16 @@ export class StudentChapterComponent implements OnInit {
     name: '修改时间',
     sortOrder: null,
     sortFn: (a: Chapter, b: Chapter) => {
-      return new Date(a.updatedAt).getSeconds() - new Date(b.updatedAt).getSeconds();
+      return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
     },
     sortDirections: ['ascend', 'descend', null],
     filterMultiple: null,
     listOfFilter: null,
     filterFn: null,
   };
+  goToQuestionPage(chapterId: number): void {
+    this.router.navigateByUrl(`student/questions?chapter_id=${chapterId}`);
+  }
   ngOnInit(): void {
     this.http.studentGetChapters().subscribe((res) => {
       this.listOfData = res;

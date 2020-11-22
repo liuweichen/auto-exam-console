@@ -29,7 +29,7 @@ export class TeacherCourseComponent implements OnInit {
     name: '创建时间',
     sortOrder: null,
     sortFn: (a: Course, b: Course) => {
-      return new Date(a.createdAt).getSeconds() - new Date(b.createdAt).getSeconds();
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     },
     sortDirections: ['ascend', 'descend', null],
     filterMultiple: null,
@@ -40,7 +40,7 @@ export class TeacherCourseComponent implements OnInit {
     name: '修改时间',
     sortOrder: null,
     sortFn: (a: Course, b: Course) => {
-      return new Date(a.updatedAt).getSeconds() - new Date(b.updatedAt).getSeconds();
+      return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
     },
     sortDirections: ['ascend', 'descend', null],
     filterMultiple: null,

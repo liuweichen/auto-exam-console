@@ -31,6 +31,7 @@
       >
         修改时间
       </th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>
@@ -41,6 +42,9 @@
       <td>{{ data.teacherId }}</td>
       <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
       <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
+      <td>
+        <a (click)="goToQuestionPage(data.id)" class="save">开始练习</a>
+      </td>
     </tr>
   </tbody>
 </nz-table>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Course } from 'src/app/shared/model/Course';
 import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
@@ -8,7 +9,7 @@ import { ColumnSortAndFilter } from 'src/app/shared/utils/ColumnSortAndFilter';
   templateUrl: './course.component.html',
 })
 export class StudentCourseComponent implements OnInit {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private router: Router) {}
   listOfData: Course[] = [];
   courseIdColumn: ColumnSortAndFilter = {
     name: '课程ID',
@@ -34,7 +35,7 @@ export class StudentCourseComponent implements OnInit {
     name: '创建时间',
     sortOrder: null,
     sortFn: (a: Course, b: Course) => {
-      return new Date(a.createdAt).getSeconds() - new Date(b.createdAt).getSeconds();
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     },
     sortDirections: ['ascend', 'descend', null],
     filterMultiple: null,
@@ -45,7 +46,7 @@ export class StudentCourseComponent implements OnInit {
     name: '修改时间',
     sortOrder: null,
     sortFn: (a: Course, b: Course) => {
-      return new Date(a.updatedAt).getSeconds() - new Date(b.updatedAt).getSeconds();
+      return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
     },
     sortDirections: ['ascend', 'descend', null],
     filterMultiple: null,
@@ -60,5 +61,8 @@ export class StudentCourseComponent implements OnInit {
         this.teacherIdColumn.listOfFilter.push({ text: teacherId.toString(), value: teacherId });
       });
     });
+  }
+  goToQuestionPage(courseId: number): void {
+    this.router.navigateByUrl(`student/questions?course_id=${courseId}`);
   }
 }

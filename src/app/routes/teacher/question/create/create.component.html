@@ -1,5 +1,5 @@
 <div>
-  <h2>创建试题</h2>
+  <h2>{{ questionId ? '修改试题' : '创建试题' }}</h2>
   <span>试题类型 :</span>
   <input type="number" nz-input placeholder="试题类型" [(ngModel)]="type" />
   <br />

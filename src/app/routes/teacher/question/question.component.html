@@ -30,7 +30,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let data of editRowTable.data">
-      <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
+      <ng-container>
         <td>{{ data.id }}</td>
         <td>{{ data.type }}</td>
         <td>{{ data.content }}</td>
@@ -42,18 +42,6 @@
           <a (click)="deleteRow(data.id)">删除</a>
         </td>
       </ng-container>
-      <ng-template #editTemplate>
-        <td>{{ data.id }}</td>
-        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.type" /></td>
-        <td><input type="text" nz-input [(ngModel)]="editCache[data.id].data.content" /></td>
-        <td>{{ data.chapterId }}</td>
-        <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
-        <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
-        <td>
-          <a (click)="saveEdit(data.id)" class="save">保存</a>
-          <a (click)="cancelEdit(data.id)">取消</a>
-        </td>
-      </ng-template>
     </tr>
   </tbody>
 </nz-table>

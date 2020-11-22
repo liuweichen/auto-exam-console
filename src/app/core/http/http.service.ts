@@ -80,6 +80,10 @@ export class HttpService {
     return this.http.post(`apiserver/teachers/${this.userId}/questions`, body);
   }
 
+  updateQuestion(id: number, body: any): Observable<any> {
+    return this.http.put(`apiserver/teachers/${this.userId}/questions/${id}`, body);
+  }
+
   studentGetTeachers(): Observable<any> {
     return this.http.get(`apiserver/students/${this.userId}/teachers`);
   }

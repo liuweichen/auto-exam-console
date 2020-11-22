@@ -5,7 +5,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Answer } from 'src/app/shared/model/Answer';
-import { Question } from 'src/app/shared/model/Question';
 
 @Component({
   selector: 'app-teacher-create-question',
@@ -13,6 +12,7 @@ import { Question } from 'src/app/shared/model/Question';
   styleUrls: ['./create.component.less'],
 })
 export class TeacherCreateQuestionComponent implements OnInit {
+  questionId: number;
   radioValue = null;
   type: number;
   content: string;
@@ -29,18 +29,25 @@ export class TeacherCreateQuestionComponent implements OnInit {
         isSelected: idx === this.radioValue,
       };
     });
-    this.http
-      .createQuestion({
-        type: this.type,
-        content: this.content,
-        explanation: this.explanation,
-        chapterId: this.chapterId,
-        answerList: this.answerList,
-      })
-      .subscribe(() => {
+    if (this.questionId) {
+      this.http.updateQuestion(this.questionId, this.getHttpJson()).subscribe(() => {
+        this.msg.success('修改成功');
+      });
+    } else {
+      this.http.createQuestion(this.getHttpJson()).subscribe(() => {
         this.msg.success('创建成功');
       });
+    }
     this.modal.destroy({ data: 'ok' });
+  }
+  private getHttpJson(): any {
+    return {
+      type: this.type,
+      content: this.content,
+      explanation: this.explanation,
+      chapterId: this.chapterId,
+      answerList: this.answerList,
+    };
   }
   cancle(): void {
     this.modal.destroy({ data: 'cancle data' });

@@ -13,6 +13,12 @@ interface Question {
   chapterId: number;
   createdAt: Date;
   updatedAt: Date;
+  answerList: Answer[];
+}
+
+interface Answer {
+  content: string;
+  isSelected: boolean;
 }
 
 @Component({
@@ -34,8 +40,6 @@ export class TeacherQuestionComponent implements OnInit {
   ];
   filterChapterId = [];
 
-  editCache: { [key: string]: { edit: boolean; data: Question } } = {};
-
   loadDataFromServer(
     pageIndex: number,
     pageSize: number,
@@ -48,7 +52,6 @@ export class TeacherQuestionComponent implements OnInit {
       this.loading = false;
       this.total = data.totalElements;
       this.listOfData = data.content;
-      this.updateEditCache();
     });
   }
 
@@ -60,27 +63,25 @@ export class TeacherQuestionComponent implements OnInit {
     this.loadDataFromServer(pageIndex, pageSize, sortField, sortOrder, filter);
   }
 
-  startEdit(id: string): void {
-    this.editCache[id].edit = true;
-  }
-
-  cancelEdit(id: number): void {
-    const index = this.listOfData.findIndex((item) => item.id === id);
-    this.editCache[id] = {
-      data: { ...this.listOfData[index] },
-      edit: false,
-    };
-  }
-
-  saveEdit(id: number): void {}
-
-  updateEditCache(): void {
-    this.editCache = {};
-    this.listOfData.forEach((item) => {
-      this.editCache[item.id] = {
-        edit: false,
-        data: { ...item },
-      };
+  startEdit(id: number): void {
+    const question = this.listOfData.find((res) => res.id === id);
+    const selectedIndex = question.answerList.findIndex((ans) => ans.isSelected === true);
+    const modal = this.modal.create({
+      nzContent: TeacherCreateQuestionComponent,
+      nzComponentParams: {
+        questionId: question.id,
+        radioValue: selectedIndex,
+        type: question.type,
+        content: question.content,
+        explanation: question.explanation,
+        chapterId: question.chapterId,
+        answerList: question.answerList,
+      },
+    });
+    modal.afterClose.subscribe((res) => {
+      if (res?.data === 'ok') {
+        this.refresh();
+      }
     });
   }
 
@@ -91,7 +92,6 @@ export class TeacherQuestionComponent implements OnInit {
   deleteRow(id: number): void {
     this.http.deleteQuestion(id).subscribe(() => {
       this.listOfData = this.listOfData.filter((item) => item.id !== id);
-      delete this.editCache[id];
       this.msg.success('删除成功');
     });
   }

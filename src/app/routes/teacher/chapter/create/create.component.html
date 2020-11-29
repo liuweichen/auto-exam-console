@@ -1,9 +1,13 @@
 <div>
   <h2>创建章节</h2>
-  <span>课程编号 :</span>
-  <input type="number" nz-input placeholder="课程编号" [(ngModel)]="courseId" />
-  <br />
-  <br />
+  <nz-form-item>
+    <nz-form-label nzFor="status">所属课程</nz-form-label>
+    <nz-form-control>
+      <nz-select style="width: 360px" [(ngModel)]="selectCourse" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
+        <nz-option *ngFor="let i of courseOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
   <span>章节名称 :</span>
   <input type="text" nz-input placeholder="章节名称" [(ngModel)]="name" />
   <br />

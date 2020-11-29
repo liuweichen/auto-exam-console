@@ -19,9 +19,27 @@ export class TeacherCreateQuestionComponent implements OnInit {
   explanation: string;
   chapterId: number;
   answerList: any[] = [{}, {}, {}, {}];
-
+  selectChapter;
+  chapterOptions = [];
   constructor(private modal: NzModalRef, private http: HttpService, public msg: NzMessageService, public router: Router) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.http.getChapters().subscribe((res) => {
+      this.chapterOptions = res.map((c) => {
+        if (this.chapterId === c.id) {
+          this.selectChapter = {
+            text: c.name,
+            value: c.id,
+          };
+          return this.selectChapter;
+        } else {
+          return {
+            text: c.name,
+            value: c.id,
+          };
+        }
+      });
+    });
+  }
   ok(): void {
     this.answerList = this.answerList.map((val, idx) => {
       return {
@@ -45,7 +63,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       type: this.type,
       content: this.content,
       explanation: this.explanation,
-      chapterId: this.chapterId,
+      chapterId: this.selectChapter.value,
       answerList: this.answerList,
     };
   }

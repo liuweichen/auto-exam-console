@@ -13,19 +13,19 @@
   <br />
   <br />
   <span>试题题目 :</span>
-  <input type="text" nz-input placeholder="试题题目" [(ngModel)]="content" />
+  <textarea nz-input placeholder="试题题目" [(ngModel)]="content" nzAutosize></textarea>
   <br />
   <br />
   <span>试题解析 :</span>
-  <input type="text" nz-input placeholder="试题解析" [(ngModel)]="explanation" />
+  <textarea nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
   <br />
   <br />
   <span>选项 :</span>
   <div>
     <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
-      <div style="float: left">
+      <div style="float: left; margin-top: auto">
         <label nz-radio [nzValue]="i"></label>
-        <input type="text" placeholder="选项内容" nz-input [(ngModel)]="answer.content" />
+        <textarea placeholder="选项内容" nz-input [(ngModel)]="answer.content" nzAutosize></textarea>
       </div>
     </nz-radio-group>
     <div>

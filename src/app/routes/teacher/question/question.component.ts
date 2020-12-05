@@ -4,6 +4,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { HttpService } from 'src/app/core/http/http.service';
 import { TeacherCreateQuestionComponent } from './create/create.component';
+import { TeacherImportQuestionComponent } from './import/import.component';
 
 interface Question {
   id: number;
@@ -99,6 +100,17 @@ export class TeacherQuestionComponent implements OnInit {
   addRow(): void {
     const modal = this.modal.create({
       nzContent: TeacherCreateQuestionComponent,
+    });
+    modal.afterClose.subscribe((res) => {
+      if (res?.data === 'ok') {
+        this.refresh();
+      }
+    });
+  }
+
+  importRow(): void {
+    const modal = this.modal.create({
+      nzContent: TeacherImportQuestionComponent,
     });
     modal.afterClose.subscribe((res) => {
       if (res?.data === 'ok') {

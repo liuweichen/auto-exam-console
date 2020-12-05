@@ -1,0 +1,17 @@
+<div>
+  <h2>批量导入试题</h2>
+  <div>
+    <span>1 :</span>
+    <a style="margin-left: 10px" down-file http-url="assets/tmp/doc/bash-import-questios-demo.xlsx" file-name="批量导入试题示例"
+      >下载模板</a
+    >
+  </div>
+  <div>
+    <span>2 :</span>
+    <input type="file" (change)="change($event)" multiple="false" />
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="cancle()">取消</button>
+    <button nz-button nzType="primary" (click)="ok()">确认</button>
+  </div>
+</div>

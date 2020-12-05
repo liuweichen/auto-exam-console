@@ -5,6 +5,7 @@ import { TeacherCreateChapterComponent } from './chapter/create/create.component
 import { TeacherCourseComponent } from './course/course.component';
 import { TeacherCreateCourseComponent } from './course/create/create.component';
 import { TeacherCreateQuestionComponent } from './question/create/create.component';
+import { TeacherImportQuestionComponent } from './question/import/import.component';
 import { TeacherQuestionComponent } from './question/question.component';
 import { TeacherRoutingModule } from './teacher-routing.module';
 
@@ -15,6 +16,7 @@ const COMPONENTS: Type<void>[] = [
   TeacherCreateCourseComponent,
   TeacherCreateChapterComponent,
   TeacherCreateQuestionComponent,
+  TeacherImportQuestionComponent,
 ];
 const COMPONENTS_NOROUNT: Type<void>[] = [];
 

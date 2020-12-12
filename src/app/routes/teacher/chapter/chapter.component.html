@@ -51,7 +51,14 @@
         <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
         <td>
           <a (click)="startEdit(data.id)" class="save">编辑</a>
-          <a (click)="deleteRow(data.id)">删除</a>
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="确定删除该资源?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="deleteRow(data.id)"
+            (nzOnCancel)="cancelDelete()"
+            >删除</a
+          >
         </td>
       </ng-container>
       <ng-template #editTemplate>

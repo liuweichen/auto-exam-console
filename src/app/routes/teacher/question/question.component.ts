@@ -106,6 +106,10 @@ export class TeacherQuestionComponent implements OnInit {
     });
   }
 
+  cancelDelete(): void {
+    this.msg.info('取消操作');
+  }
+
   addRow(): void {
     const modal = this.modal.create({
       nzContent: TeacherCreateQuestionComponent,

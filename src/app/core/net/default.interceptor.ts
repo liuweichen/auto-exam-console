@@ -57,13 +57,13 @@ export class DefaultInterceptor implements HttpInterceptor {
     setTimeout(() => this.injector.get(Router).navigateByUrl(url));
   }
 
-  private checkStatus(ev: HttpResponseBase): void {
+  private checkStatus(ev: HttpResponseBase | any): void {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
       return;
     }
 
-    const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-    this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
+    const errortext = ev?.error?.errorMsg || CODEMESSAGE[ev.status];
+    this.notification.error(`请求错误 ${ev.status}: `, errortext);
   }
 
   /**

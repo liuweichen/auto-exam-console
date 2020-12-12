@@ -36,10 +36,15 @@ export class TeacherQuestionComponent implements OnInit {
   pageSize = 10;
   pageIndex = 1;
   filterType = [
-    { text: '1', value: 1 },
-    { text: '2', value: 2 },
+    { text: '单选', value: 1 },
+    { text: '多选', value: 2 },
   ];
   filterChapterId = [];
+
+  getTypeText(value: number): string {
+    console.log(value);
+    return this.filterType.find((t) => t.value === value).text;
+  }
 
   loadDataFromServer(
     pageIndex: number,
@@ -92,7 +97,7 @@ export class TeacherQuestionComponent implements OnInit {
 
   deleteRow(id: number): void {
     this.http.deleteQuestion(id).subscribe(() => {
-      this.listOfData = this.listOfData.filter((item) => item.id !== id);
+      this.refresh();
       this.msg.success('删除成功');
     });
   }

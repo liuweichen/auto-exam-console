@@ -21,6 +21,17 @@ export class TeacherCreateQuestionComponent implements OnInit {
   answerList: any[] = [{}, {}, {}, {}];
   selectChapter;
   chapterOptions = [];
+  selectType;
+  typeOptions = [
+    {
+      text: '单选',
+      value: 1,
+    },
+    {
+      text: '多选',
+      value: 2,
+    },
+  ];
   constructor(private modal: NzModalRef, private http: HttpService, public msg: NzMessageService, public router: Router) {}
   ngOnInit(): void {
     this.http.getChapters().subscribe((res) => {
@@ -38,6 +49,11 @@ export class TeacherCreateQuestionComponent implements OnInit {
           };
         }
       });
+    });
+    this.typeOptions.forEach((t) => {
+      if (t.value === this.type) {
+        this.selectType = t;
+      }
     });
   }
   ok(): void {
@@ -60,7 +76,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
   }
   private getHttpJson(): any {
     return {
-      type: this.type,
+      type: this.selectType.value,
       content: this.content,
       explanation: this.explanation,
       chapterId: this.selectChapter.value,

@@ -1,6 +1,6 @@
 <page-header></page-header>
 <span>试题类型 :</span>
-<span>{{ question.type }}</span>
+<span>{{ question.type === 1 ? '单选' : question.type === 2 ? '多选' : '' }}</span>
 <br />
 <br />
 <span>{{ question.id + ' 试题题目 :' }}</span>
@@ -23,6 +23,10 @@
   <span>答案 :</span>
   <div mathjax>
     {{ rightAnster.content }}
+  </div>
+  <span>解析 :</span>
+  <div mathjax>
+    {{ question.explanation }}
   </div>
 </div>
 <button nz-button nzType="default" (click)="lastQuestion()">上一题</button>

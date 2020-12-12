@@ -8,10 +8,14 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
-  <span>试题类型 :</span>
-  <input type="number" nz-input placeholder="试题类型" [(ngModel)]="type" />
-  <br />
-  <br />
+  <nz-form-item>
+    <nz-form-label nzFor="status">试题类型</nz-form-label>
+    <nz-form-control>
+      <nz-select style="width: 360px" [(ngModel)]="selectType" [nzPlaceHolder]="'请选择'" [nzShowSearch]="false">
+        <nz-option *ngFor="let i of typeOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
   <span>试题题目 :</span>
   <textarea nz-input placeholder="试题题目" [(ngModel)]="content" nzAutosize></textarea>
   <br />

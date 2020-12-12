@@ -35,7 +35,7 @@
     <tr *ngFor="let data of editRowTable.data">
       <ng-container>
         <td>{{ data.id }}</td>
-        <td>{{ data.type }}</td>
+        <td>{{ data.type === 1 ? '单选' : data.type === 2 ? '多选' : '' }}</td>
         <td mathjax>{{ data.content }}</td>
         <td>{{ data.chapterId }}</td>
         <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>

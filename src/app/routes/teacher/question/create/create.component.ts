@@ -32,6 +32,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       value: 2,
     },
   ];
+  previewOn: Boolean;
   constructor(private modal: NzModalRef, private http: HttpService, public msg: NzMessageService, public router: Router) {}
   ngOnInit(): void {
     this.http.getChapters().subscribe((res) => {
@@ -85,6 +86,9 @@ export class TeacherCreateQuestionComponent implements OnInit {
   }
   cancle(): void {
     this.modal.destroy({ data: 'cancle data' });
+  }
+  preview(on: Boolean): void {
+    this.previewOn = on;
   }
   removeInput(item: Answer): void {
     const i = this.answerList.indexOf(item);

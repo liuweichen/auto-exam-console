@@ -17,15 +17,17 @@
     </nz-form-control>
   </nz-form-item>
   <span>试题题目 :</span>
-  <textarea nz-input placeholder="试题题目" [(ngModel)]="content" nzAutosize></textarea>
+  <textarea *ngIf="!previewOn" nz-input placeholder="试题题目" [(ngModel)]="content" nzAutosize></textarea>
+  <span *ngIf="previewOn" mathjax>{{ content }}</span>
   <br />
   <br />
   <span>试题解析 :</span>
-  <textarea nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
+  <textarea *ngIf="!previewOn" nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
+  <span *ngIf="previewOn" mathjax>{{ explanation }}</span>
   <br />
   <br />
   <span>选项 :</span>
-  <div>
+  <div *ngIf="!previewOn">
     <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
       <div style="float: left; margin-top: auto">
         <label nz-radio [nzValue]="i"></label>
@@ -43,7 +45,15 @@
       </ul>
     </div>
   </div>
+  <div *ngIf="previewOn">
+    <div mathjax *ngFor="let answer of answerList; let i = index">
+      <label nz-radio [nzValue]="i"></label>
+      {{ answer.content }}
+    </div>
+  </div>
   <div *nzModalFooter>
+    <button *ngIf="!previewOn" nz-button nzType="default" (click)="preview(true)">预览</button>
+    <button *ngIf="previewOn" nz-button nzType="default" (click)="preview(false)">取消预览</button>
     <button nz-button nzType="default" (click)="cancle()">取消</button>
     <button nz-button nzType="primary" (click)="ok()">确认</button>
   </div>

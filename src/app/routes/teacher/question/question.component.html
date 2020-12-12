@@ -6,8 +6,28 @@
 <button nz-button (click)="importRow()" [nzType]="'primary'">
   <span>批量导入</span>
 </button>
-<br />
-<br />
+<ng-container *ngIf="setOfCheckedId.size > 0">
+  <button nz-button (click)="deleteAll()">批量删除</button>
+  <button nz-button nz-dropdown [nzDropdownMenu]="batchMenu" nzPlacement="bottomLeft">
+    更多操作
+    <i nz-icon nzType="down"></i>
+  </button>
+  <nz-dropdown-menu #batchMenu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item>批量修改</li>
+      <li nz-menu-item>批量审批</li>
+    </ul>
+  </nz-dropdown-menu>
+</ng-container>
+<div class="my-md">
+  <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+    <ng-template #message>
+      已选择
+      <strong class="text-primary">{{ setOfCheckedId.size }}</strong> 项&nbsp;&nbsp;
+      <a *ngIf="setOfCheckedId.size > 0" (click)="clearCheck()" class="ml-lg">清空</a>
+    </ng-template>
+  </nz-alert>
+</div>
 <nz-table
   nzShowSizeChanger
   [nzData]="listOfData"
@@ -22,6 +42,7 @@
 >
   <thead>
     <tr>
+      <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
       <th>试题ID</th>
       <th nzColumnKey="type" [nzFilters]="filterType" [nzFilterMultiple]="false" [nzFilterFn]="true">试题类型</th>
       <th>试题内容</th>
@@ -34,6 +55,7 @@
   <tbody>
     <tr *ngFor="let data of editRowTable.data">
       <ng-container>
+        <td [nzChecked]="setOfCheckedId.has(data.id)" [nzDisabled]="data.disabled" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
         <td>{{ data.id }}</td>
         <td>{{ data.type === 1 ? '单选' : data.type === 2 ? '多选' : '' }}</td>
         <td mathjax>{{ data.content }}</td>

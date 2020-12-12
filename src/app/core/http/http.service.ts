@@ -76,6 +76,10 @@ export class HttpService {
     return this.http.delete(`apiserver/teachers/${this.userId}/questions/${id}`);
   }
 
+  deleteQuestionList(body: any): Observable<any> {
+    return this.http.post(`apiserver/teachers/${this.userId}/questions/delete`, body);
+  }
+
   createQuestion(body: any): Observable<any> {
     return this.http.post(`apiserver/teachers/${this.userId}/questions`, body);
   }

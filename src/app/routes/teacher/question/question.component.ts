@@ -15,6 +15,7 @@ interface Question {
   createdAt: Date;
   updatedAt: Date;
   answerList: Answer[];
+  disabled: boolean;
 }
 
 interface Answer {
@@ -40,7 +41,9 @@ export class TeacherQuestionComponent implements OnInit {
     { text: '多选', value: 2 },
   ];
   filterChapterId = [];
-
+  checked: boolean = false;
+  indeterminate: boolean = false;
+  setOfCheckedId = new Set<number>();
   getTypeText(value: number): string {
     console.log(value);
     return this.filterType.find((t) => t.value === value).text;
@@ -59,6 +62,7 @@ export class TeacherQuestionComponent implements OnInit {
       this.total = data.totalElements;
       this.listOfData = data.content;
     });
+    this.clearCheck();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -124,6 +128,39 @@ export class TeacherQuestionComponent implements OnInit {
     });
   }
 
+  deleteAll(): void {
+    console.log(Array.from(this.setOfCheckedId));
+    this.http.deleteQuestionList(Array.from(this.setOfCheckedId)).subscribe(() => {
+      this.refresh();
+      this.msg.success('批量删除成功');
+    });
+  }
+  clearCheck(): void {
+    this.setOfCheckedId.clear();
+    this.checked = false;
+    this.indeterminate = false;
+  }
+  onAllChecked(checked: boolean): void {
+    this.setOfCheckedId.clear();
+    this.listOfData.filter(({ disabled }) => !disabled).forEach(({ id }) => this.updateCheckedSet(id, checked));
+    this.refreshCheckedStatus();
+  }
+  onItemChecked(id: number, checked: boolean): void {
+    this.updateCheckedSet(id, checked);
+    this.refreshCheckedStatus();
+  }
+  private refreshCheckedStatus(): void {
+    const listOfEnabledData = this.listOfData.filter(({ disabled }) => !disabled);
+    this.checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId.has(id));
+    this.indeterminate = listOfEnabledData.some(({ id }) => this.setOfCheckedId.has(id)) && !this.checked;
+  }
+  private updateCheckedSet(id: number, checked: boolean): void {
+    if (checked) {
+      this.setOfCheckedId.add(id);
+    } else {
+      this.setOfCheckedId.delete(id);
+    }
+  }
   private refresh(): void {
     this.http.getChapters().subscribe((res) => {
       this.filterChapterId = res.map((e) => {

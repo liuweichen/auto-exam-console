@@ -28,10 +28,10 @@ const LANG_PROVIDES = [
 ];
 // #endregion
 // #region i18n services
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '@core';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function I18nHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
@@ -59,6 +59,8 @@ const FORM_MODULES = [JsonSchemaModule];
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DefaultInterceptor } from '@core';
 import { SimpleInterceptor } from '@delon/auth';
+import { MathJaxModule } from 'ngx-mathjax';
+
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
@@ -66,7 +68,13 @@ const INTERCEPTOR_PROVIDES = [
 // #endregion
 
 // #region global third module
-const GLOBAL_THIRD_MODULES = [];
+const GLOBAL_THIRD_MODULES = [
+  MathJaxModule.forRoot({
+    version: '2.7.5',
+    config: 'TeX-AMS_HTML',
+    hostname: 'cdnjs.cloudflare.com',
+  }),
+];
 // #endregion
 
 // #region Startup Service

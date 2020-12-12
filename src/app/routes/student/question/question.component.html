@@ -7,21 +7,21 @@
 <br />
 <br />
 <div>
-  <span>{{ question.content }}</span>
+  <span mathjax>{{ question.content }}</span>
 </div>
 <br />
 <br />
 <span>选项 :</span>
 <div>
   <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
-    <label nz-radio [nzValue]="i" (click)="selectAnswer(answer)">{{ answer.content }} </label>
+    <label mathjax nz-radio [nzValue]="i" (click)="selectAnswer(answer)">{{ answer.content }} </label>
   </nz-radio-group>
 </div>
 <br />
 <br />
 <div *ngIf="showRightAnswer">
   <span>答案 :</span>
-  <div>
+  <div mathjax>
     {{ rightAnster.content }}
   </div>
 </div>

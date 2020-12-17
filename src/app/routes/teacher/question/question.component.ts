@@ -3,6 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { HttpService } from 'src/app/core/http/http.service';
+import { TeacherAddQuestionToExamComponent } from './add2exam/add2exam.component';
 import { TeacherCreateQuestionComponent } from './create/create.component';
 import { TeacherImportQuestionComponent } from './import/import.component';
 
@@ -95,6 +96,20 @@ export class TeacherQuestionComponent implements OnInit {
     });
   }
 
+  addQuestionsToExam(): void {
+    const modal = this.modal.create({
+      nzContent: TeacherAddQuestionToExamComponent,
+      nzComponentParams: {
+        questionIdList: Array.from(this.setOfCheckedId),
+      },
+    });
+    modal.afterClose.subscribe((res) => {
+      if (res?.data === 'ok') {
+        this.refresh();
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.refresh();
   }
@@ -133,7 +148,6 @@ export class TeacherQuestionComponent implements OnInit {
   }
 
   deleteAll(): void {
-    console.log(Array.from(this.setOfCheckedId));
     this.http.deleteQuestionList(Array.from(this.setOfCheckedId)).subscribe(() => {
       this.refresh();
       this.msg.success('批量删除成功');

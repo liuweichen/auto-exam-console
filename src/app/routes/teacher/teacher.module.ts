@@ -10,6 +10,7 @@ import { TeacherCreateQuestionComponent } from './question/create/create.compone
 import { TeacherImportQuestionComponent } from './question/import/import.component';
 import { TeacherQuestionComponent } from './question/question.component';
 import { TeacherRoutingModule } from './teacher-routing.module';
+import { TeacherAddQuestionToExamComponent } from './question/add2exam/add2exam.component';
 
 const COMPONENTS: Type<void>[] = [
   TeacherCourseComponent,
@@ -21,6 +22,7 @@ const COMPONENTS: Type<void>[] = [
   TeacherCreateQuestionComponent,
   TeacherImportQuestionComponent,
   TeacherCreateExamComponent,
+  TeacherAddQuestionToExamComponent,
 ];
 const COMPONENTS_NOROUNT: Type<void>[] = [];
 

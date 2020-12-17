@@ -64,6 +64,10 @@ export class HttpService {
     return this.http.post(`apiserver/teachers/${this.userId}/exams`, body);
   }
 
+  addQuestionsToExam(examId: number, body: any): Observable<any> {
+    return this.http.post(`apiserver/teachers/${this.userId}/exams/${examId}/add`, body);
+  }
+
   getQuestions(id: number): Observable<any> {
     return this.http.get(`apiserver/teachers/${this.userId}/questions?chapter_id=${id}`);
   }

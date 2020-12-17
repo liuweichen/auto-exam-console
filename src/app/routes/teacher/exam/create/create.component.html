@@ -1,0 +1,21 @@
+<div>
+  <h2>创建试卷</h2>
+  <nz-form-item>
+    <nz-form-label nzFor="status">所属课程</nz-form-label>
+    <nz-form-control>
+      <nz-select style="width: 360px" [(ngModel)]="selectCourse" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
+        <nz-option *ngFor="let i of courseOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <span>试卷名称 :</span>
+  <input type="text" nz-input placeholder="试卷名称" [(ngModel)]="name" />
+  <br />
+  <br />
+  <span>试卷介绍 :</span>
+  <input type="text" nz-input placeholder="试卷介绍" [(ngModel)]="description" />
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="cancle()">取消</button>
+    <button nz-button nzType="primary" (click)="ok()">确认</button>
+  </div>
+</div>

@@ -2,6 +2,8 @@ import { NgModule, Type } from '@angular/core';
 import { SharedModule } from '@shared';
 import { TeacherChapterComponent } from './chapter/chapter.component';
 import { TeacherCreateChapterComponent } from './chapter/create/create.component';
+import { TeacherExamComponent } from './exam/exam.component';
+import { TeacherCreateExamComponent } from './exam/create/create.component';
 import { TeacherCourseComponent } from './course/course.component';
 import { TeacherCreateCourseComponent } from './course/create/create.component';
 import { TeacherCreateQuestionComponent } from './question/create/create.component';
@@ -13,10 +15,12 @@ const COMPONENTS: Type<void>[] = [
   TeacherCourseComponent,
   TeacherChapterComponent,
   TeacherQuestionComponent,
+  TeacherExamComponent,
   TeacherCreateCourseComponent,
   TeacherCreateChapterComponent,
   TeacherCreateQuestionComponent,
   TeacherImportQuestionComponent,
+  TeacherCreateExamComponent,
 ];
 const COMPONENTS_NOROUNT: Type<void>[] = [];
 

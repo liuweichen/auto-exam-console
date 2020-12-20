@@ -1,0 +1,50 @@
+<page-header></page-header>
+<nz-table #editRowTable nzBordered [nzData]="listOfData" nzTableLayout="fixed">
+  <thead>
+    <tr>
+      <th [nzSortOrder]="examIdColumn.sortOrder" [nzSortFn]="examIdColumn.sortFn" [nzSortDirections]="examIdColumn.sortDirections">
+        试卷ID
+      </th>
+      <th>试卷名称</th>
+      <th>试卷介绍</th>
+      <th
+        [nzSortOrder]="courseIdColumn.sortOrder"
+        [nzSortFn]="courseIdColumn.sortFn"
+        [nzSortDirections]="courseIdColumn.sortDirections"
+        [nzFilterMultiple]="courseIdColumn.filterMultiple"
+        [nzFilters]="courseIdColumn.listOfFilter"
+        [nzFilterFn]="courseIdColumn.filterFn"
+      >
+        课程ID
+      </th>
+      <th
+        [nzSortOrder]="createTimeColumn.sortOrder"
+        [nzSortFn]="createTimeColumn.sortFn"
+        [nzSortDirections]="createTimeColumn.sortDirections"
+      >
+        创建时间
+      </th>
+      <th
+        [nzSortOrder]="updateTimeColumn.sortOrder"
+        [nzSortFn]="updateTimeColumn.sortFn"
+        [nzSortDirections]="updateTimeColumn.sortDirections"
+      >
+        修改时间
+      </th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+      <td>{{ data.id }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.description }}</td>
+      <td>{{ data.courseId }}</td>
+      <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
+      <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
+      <td>
+        <a (click)="goToQuestionPage(data.id)" class="save">开始练习</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

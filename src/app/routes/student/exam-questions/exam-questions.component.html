@@ -1,0 +1,35 @@
+<page-header></page-header>
+
+<div *ngFor="let question of listOfData; let i = index">
+  <span>试题类型 :</span>
+  <span>{{ question.type === 1 ? '单选' : question.type === 2 ? '多选' : '' }}</span>
+  <br />
+  <br />
+  <span>{{ question.id + ' 试题题目 :' }}</span>
+  <br />
+  <br />
+  <div>
+    <span mathjax>{{ question.content }}</span>
+  </div>
+  <br />
+  <br />
+  <span>选项 :</span>
+  <div>
+    <nz-radio-group [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
+      <label mathjax nz-radio [nzValue]="i">{{ answer.content }} </label>
+    </nz-radio-group>
+  </div>
+  <br />
+  <br />
+  <div *ngIf="submitFlag">
+    <span>答案 :</span>
+    <div mathjax>
+      {{ question.rightAnster }}
+    </div>
+    <span>解析 :</span>
+    <div mathjax>
+      {{ question.explanation }}
+    </div>
+  </div>
+</div>
+<button nz-button nzType="primary" (click)="submit()">交卷</button>

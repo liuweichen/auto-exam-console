@@ -59,7 +59,9 @@ export class TeacherExamQuestionComponent implements OnInit {
     this.msg.info('取消操作');
   }
 
-  importRow(): void {}
+  importRow(): void {
+    this.router.navigateByUrl(`/teacher/questions`);
+  }
 
   deleteAll(): void {
     this.http.removeQuestionsFromExam(this.examId, Array.from(this.setOfCheckedId)).subscribe(() => {
@@ -96,6 +98,8 @@ export class TeacherExamQuestionComponent implements OnInit {
   private refresh(): void {
     this.http.getExamQuestions(this.examId).subscribe((data) => {
       this.listOfData = data;
+      this.setOfCheckedId.clear();
+      this.refreshCheckedStatus();
     });
     this.http.getChapters().subscribe((res) => {
       this.filterChapterId = res.map((e) => {

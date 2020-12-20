@@ -126,6 +126,12 @@ export class StartupService {
                     icon: { type: 'icon', value: 'rocket' },
                     shortcutRoot: true,
                   },
+                  {
+                    text: '试卷',
+                    link: '/student/exams',
+                    icon: { type: 'icon', value: 'rocket' },
+                    shortcutRoot: true,
+                  },
                 ],
               },
             ];

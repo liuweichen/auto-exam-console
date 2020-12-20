@@ -128,6 +128,14 @@ export class HttpService {
     return this.http.get(`apiserver/students/${this.userId}/chapters`);
   }
 
+  studentGetExams(): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/exams`);
+  }
+
+  studentGetExamQuestions(examId: number): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/exams/${examId}/questions`);
+  }
+
   studentGetQuestions(courseId: number, chapterId: number, current_page: number, page_size: number): Observable<any> {
     let params = new HttpParams().append('current_page', current_page.toString()).append('page_size', page_size.toString());
     if (courseId) {

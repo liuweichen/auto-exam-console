@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/core/http/http.service';
@@ -12,7 +13,7 @@ import { TeacherCreateExamComponent } from './create/create.component';
   styleUrls: ['./exam.component.less'],
 })
 export class TeacherExamComponent implements OnInit {
-  constructor(private http: HttpService, public msg: NzMessageService, private modal: NzModalService) {}
+  constructor(private http: HttpService, public msg: NzMessageService, private modal: NzModalService, private router: Router) {}
 
   editCache: { [key: string]: { edit: boolean; data: Exam } } = {};
   listOfData: Exam[] = [];
@@ -116,6 +117,10 @@ export class TeacherExamComponent implements OnInit {
     modal.afterClose.subscribe(() => {
       this.refresh();
     });
+  }
+
+  goExamQuestions(exam: any): void {
+    this.router.navigateByUrl(`/teacher/exam-questions?id=${exam.id}&name=${exam.name}`);
   }
 
   private refresh(): void {

@@ -64,8 +64,16 @@ export class HttpService {
     return this.http.post(`apiserver/teachers/${this.userId}/exams`, body);
   }
 
+  getExamQuestions(examId: any): Observable<any> {
+    return this.http.get(`apiserver/teachers/${this.userId}/exams/${examId}/get`);
+  }
+
   addQuestionsToExam(examId: number, body: any): Observable<any> {
     return this.http.post(`apiserver/teachers/${this.userId}/exams/${examId}/add`, body);
+  }
+
+  removeQuestionsFromExam(examId: number, body: any): Observable<any> {
+    return this.http.post(`apiserver/teachers/${this.userId}/exams/${examId}/remove`, body);
   }
 
   getQuestions(id: number): Observable<any> {

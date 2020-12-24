@@ -18,12 +18,12 @@
   </nz-form-item>
   <span>试题题目 :</span>
   <textarea *ngIf="!previewOn" nz-input placeholder="试题题目" [(ngModel)]="content" nzAutosize></textarea>
-  <span *ngIf="previewOn" mathjax>{{ content }}</span>
+  <div *ngIf="previewOn" mathjax>{{ content }}</div>
   <br />
   <br />
   <span>试题解析 :</span>
   <textarea *ngIf="!previewOn" nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
-  <span *ngIf="previewOn" mathjax>{{ explanation }}</span>
+  <div *ngIf="previewOn" mathjax>{{ explanation }}</div>
   <br />
   <br />
   <span>选项 :</span>

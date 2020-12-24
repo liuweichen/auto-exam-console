@@ -67,7 +67,7 @@
         <td [nzChecked]="setOfCheckedId.has(data.id)" [nzDisabled]="data.disabled" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
         <td>{{ data.id }}</td>
         <td>{{ data.type === 1 ? '单选' : data.type === 2 ? '多选' : '' }}</td>
-        <td mathjax>{{ data.content }}</td>
+        <td class="ellipsis-content" [title]="data.content">{{ data.content }}</td>
         <td>{{ data.chapterId }}</td>
         <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
         <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>

@@ -3,7 +3,9 @@ import { Params } from '@angular/router';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/core/http/http.service';
+import { TeacherExamQuestionPreviewComponent } from './preview/preview.component';
 
 interface Question {
   id: number;
@@ -14,6 +16,7 @@ interface Question {
   createdAt: Date;
   updatedAt: Date;
   disabled: boolean;
+  answerList: any[];
 }
 
 @Component({
@@ -22,7 +25,13 @@ interface Question {
   styleUrls: ['./exam-question.component.less'],
 })
 export class TeacherExamQuestionComponent implements OnInit {
-  constructor(private http: HttpService, public msg: NzMessageService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private http: HttpService,
+    public msg: NzMessageService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private modal: NzModalService,
+  ) {}
 
   examId: number;
   examName: string;
@@ -45,6 +54,21 @@ export class TeacherExamQuestionComponent implements OnInit {
       this.examId = params.id;
       this.examName = params.name;
       this.refresh();
+    });
+  }
+
+  preview(id: number): void {
+    const question = this.listOfData.find((res) => res.id === id);
+    this.modal.create({
+      nzContent: TeacherExamQuestionPreviewComponent,
+      nzComponentParams: {
+        questionId: question.id,
+        type: question.type,
+        content: question.content,
+        explanation: question.explanation,
+        chapterId: question.chapterId,
+        answerList: question.answerList,
+      },
     });
   }
 

@@ -53,6 +53,7 @@
         <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
         <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
         <td>
+          <a (click)="preview(data.id)" class="save">预览</a>
           <a
             nz-popconfirm
             nzPopconfirmTitle="确定移除该资源?"

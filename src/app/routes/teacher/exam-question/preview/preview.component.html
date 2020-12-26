@@ -1,0 +1,24 @@
+<div>
+  <h2>预览试题</h2>
+  <div>所属章节ID :{{ chapterId }}</div>
+  <br />
+  <div>试题类型 :{{ type === 1 ? '单选' : '多选' }}</div>
+  <br />
+  <span>试题题目 :</span>
+  <div mathjax>{{ content }}</div>
+  <br />
+  <span>试题解析 :</span>
+  <div mathjax>{{ explanation }}</div>
+  <br />
+  <span>选项 :</span>
+  <div>
+    <div mathjax *ngFor="let answer of answerList; let i = index">
+      <i *ngIf="answer.isSelected" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+      <i *ngIf="!answer.isSelected" nz-icon nzType="close-circle" nzTheme="twotone"></i>
+      {{ answer.content }}
+    </div>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="cancle()">取消</button>
+  </div>
+</div>

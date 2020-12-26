@@ -36,7 +36,7 @@
       <ng-container *ngIf="!editCache[data.id].edit; else editTemplate">
         <td>{{ data.id }}</td>
         <td>{{ data.name }}</td>
-        <td>{{ data.description }}</td>
+        <td class="ellipsis-content" [title]="data.description">{{ data.description }}</td>
         <td>{{ data.teacherId }}</td>
         <td>{{ data.createdAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
         <td>{{ data.updatedAt | date: 'yyyy/MM/dd HH:mm:ss' }}</td>

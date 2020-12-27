@@ -24,7 +24,7 @@
   <nz-dropdown-menu #batchMenu="nzDropdownMenu">
     <ul nz-menu>
       <li nz-menu-item (click)="addQuestionsToExam()">添加到试卷</li>
-      <li nz-menu-item>批量审批</li>
+      <li nz-menu-item (click)="exportQuestionsToExcel()">导出到文件</li>
     </ul>
   </nz-dropdown-menu>
 </ng-container>

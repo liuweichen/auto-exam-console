@@ -28,32 +28,38 @@ export class TeacherImportQuestionComponent implements OnInit {
   ok(): void {
     this.loadingSrv.open({ type: 'icon' });
     this.xlsx.import(this.file).then((res) => {
-      const questions = res.Sheet1;
-      const promiseArr = [];
-      for (let i = 1; i < questions.length; i++) {
-        const question = questions[i];
-        if (question[0]) {
-          promiseArr.push(this.http.createQuestion(this.getHttpJson(question)));
-        }
-      }
       let successCount = 0;
       let errorCount = 0;
-      forkJoin(
-        concat(...promiseArr).pipe(
-          map((success) => {
-            successCount++;
-            return success;
-          }),
-          catchError((error) => {
-            errorCount++;
-            return error;
-          }),
-        ),
-      ).subscribe(() => {
-        this.msg.success(`成功导入${successCount}条，失败导入${errorCount}条`);
+      try {
+        const questions = res.Sheet1;
+        const promiseArr = [];
+        for (let i = 1; i < questions.length; i++) {
+          const question = questions[i];
+          if (question[0]) {
+            promiseArr.push(this.http.createQuestion(this.getHttpJson(question)));
+          }
+        }
+        forkJoin(
+          concat(...promiseArr).pipe(
+            map((success) => {
+              successCount++;
+              return success;
+            }),
+            catchError((error) => {
+              this.loadingSrv.close();
+              errorCount++;
+              return error;
+            }),
+          ),
+        ).subscribe(() => {
+          this.msg.success(`成功导入${successCount}条，失败导入${errorCount}条`);
+          this.loadingSrv.close();
+          this.modal.destroy({ data: 'ok' });
+        });
+      } catch (error) {
         this.loadingSrv.close();
-        this.modal.destroy({ data: 'ok' });
-      });
+        this.msg.success(`成功导入${successCount}条，失败导入${errorCount}条，错误信息${error}`);
+      }
     });
   }
   private getHttpJson(question: any): any {

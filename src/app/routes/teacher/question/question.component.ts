@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { XlsxService } from '@delon/abc/xlsx';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
@@ -30,7 +31,7 @@ interface Answer {
   styleUrls: ['./question.component.less'],
 })
 export class TeacherQuestionComponent implements OnInit {
-  constructor(private http: HttpService, public msg: NzMessageService, private modal: NzModalService) {}
+  constructor(private http: HttpService, public msg: NzMessageService, private modal: NzModalService, private xlsx: XlsxService) {}
 
   total = 1;
   listOfData: Question[] = [];
@@ -93,6 +94,51 @@ export class TeacherQuestionComponent implements OnInit {
       if (res?.data === 'ok') {
         this.refresh();
       }
+    });
+  }
+
+  exportQuestionsToExcel(): void {
+    const data = [
+      [
+        '试题类型',
+        '试题题目',
+        '所属章节编号',
+        '试题解析',
+        '选项01',
+        '选项01是否选择',
+        '选项02',
+        '选项02是否选择',
+        '选项03',
+        '选项03是否选择',
+        '选项04',
+        '选项04是否选择',
+      ],
+    ];
+    this.listOfData
+      .filter((q) => this.setOfCheckedId.has(q.id))
+      .forEach((q) => {
+        data.push([
+          q.type.toString(),
+          q.content,
+          q.chapterId.toString(),
+          q.explanation,
+          ...q.answerList
+            .map((a) => {
+              return [a.content, a.isSelected + ''];
+            })
+            .reduce((a, b) => {
+              return a.concat(b);
+            }),
+        ]);
+      });
+    this.xlsx.export({
+      sheets: [
+        {
+          data,
+          name: 'Sheet1',
+        },
+      ],
+      filename: new Date().toString() + '-export-questions.xlsx',
     });
   }
 

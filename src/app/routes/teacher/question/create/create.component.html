@@ -21,6 +21,11 @@
   <div *ngIf="previewOn" mathjax>{{ content }}</div>
   <br />
   <br />
+  <span>上传图片 :</span>
+  <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzFileType]="fileType">
+    <button nz-button [disabled]="imagesList.length > 0"><i nz-icon nzType="upload"></i>可选</button>
+  </nz-upload>
+  <br />
   <span>试题解析 :</span>
   <textarea *ngIf="!previewOn" nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
   <div *ngIf="previewOn" mathjax>{{ explanation }}</div>

@@ -1,14 +1,16 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
   private userId: string;
-  constructor(private http: _HttpClient) {
+  constructor(private http: _HttpClient, private httpClient: HttpClient) {
     this.http = http;
   }
 
@@ -114,6 +116,31 @@ export class HttpService {
 
   updateQuestion(id: number, body: any): Observable<any> {
     return this.http.put(`apiserver/teachers/${this.userId}/questions/${id}`, body);
+  }
+
+  private getUploadToken(): Observable<any> {
+    return this.http.get(`apiserver/teachers/${this.userId}/token`);
+  }
+
+  uploadImage(fileList: NzUploadFile[], questionId: number): Observable<any> {
+    return this.getUploadToken().pipe(
+      mergeMap((token) => {
+        return this.uploadImageWithToken(fileList, questionId, token.token);
+      }),
+    );
+  }
+
+  private uploadImageWithToken(fileList: NzUploadFile[], questionId: any, token: string): Observable<any> {
+    const formData = new FormData();
+    fileList.forEach((file: any) => {
+      formData.append('file', file);
+      formData.append('key', 'question-' + questionId + '-' + file.name);
+    });
+    formData.append('token', token);
+    const req = new HttpRequest('POST', 'http://upload-z2.qiniup.com', formData, {
+      reportProgress: true,
+    });
+    return this.httpClient.request(req).pipe(filter((e) => e instanceof HttpResponse));
   }
 
   studentGetTeachers(): Observable<any> {

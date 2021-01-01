@@ -1,10 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Answer } from 'src/app/shared/model/Answer';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-teacher-create-question',
@@ -33,7 +36,16 @@ export class TeacherCreateQuestionComponent implements OnInit {
     },
   ];
   previewOn: Boolean;
-  constructor(private modal: NzModalRef, private http: HttpService, public msg: NzMessageService, public router: Router) {}
+  uploading = false;
+  imagesList: NzUploadFile[] = [];
+  fileType = 'image/png,image/jpeg,image/gif';
+  constructor(
+    private modal: NzModalRef,
+    private httpClient: HttpClient,
+    private http: HttpService,
+    public msg: NzMessageService,
+    public router: Router,
+  ) {}
   ngOnInit(): void {
     this.http.getChapters().subscribe((res) => {
       this.chapterOptions = res.map((c) => {
@@ -69,8 +81,19 @@ export class TeacherCreateQuestionComponent implements OnInit {
         this.msg.success('修改成功');
       });
     } else {
-      this.http.createQuestion(this.getHttpJson()).subscribe(() => {
-        this.msg.success('创建成功');
+      this.uploading = true;
+      this.http.createQuestion(this.getHttpJson()).subscribe((res) => {
+        this.handleUpload(res.id).subscribe(
+          () => {
+            this.uploading = false;
+            this.imagesList = [];
+            this.msg.success('创建成功');
+          },
+          () => {
+            this.uploading = false;
+            this.msg.error('上传图片失败.');
+          },
+        );
       });
     }
     this.modal.destroy({ data: 'ok' });
@@ -82,6 +105,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       explanation: this.explanation,
       chapterId: this.selectChapter.value,
       answerList: this.answerList,
+      imageAddress: this.imagesList.length > 0 ? this.imagesList[0].name : '',
     };
   }
   cancle(): void {
@@ -100,5 +124,12 @@ export class TeacherCreateQuestionComponent implements OnInit {
   }
   addInput(): void {
     this.answerList.push({});
+  }
+  beforeUpload = (file: NzUploadFile): boolean => {
+    this.imagesList = this.imagesList.concat(file);
+    return false;
+  };
+  handleUpload(questionId: number): Observable<any> {
+    return this.http.uploadImage(this.imagesList, questionId);
   }
 }

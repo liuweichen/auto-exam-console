@@ -5,7 +5,7 @@
   <br />
   <br />
   <span>课程介绍 :</span>
-  <input type="text" nz-input placeholder="课程介绍" [(ngModel)]="description" />
+  <textarea type="text" nz-input nzAutosize placeholder="课程介绍" [(ngModel)]="description"></textarea>
   <div *nzModalFooter>
     <button nz-button nzType="default" (click)="cancle()">取消</button>
     <button nz-button nzType="primary" (click)="ok()">确认</button>

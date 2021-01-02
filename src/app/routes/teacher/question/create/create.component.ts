@@ -6,7 +6,6 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Answer } from 'src/app/shared/model/Answer';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -25,6 +24,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
   selectChapter;
   chapterOptions = [];
   selectType;
+  imageUrl;
   typeOptions = [
     {
       text: '单选',
@@ -39,13 +39,8 @@ export class TeacherCreateQuestionComponent implements OnInit {
   uploading = false;
   imagesList: NzUploadFile[] = [];
   fileType = 'image/png,image/jpeg,image/gif';
-  constructor(
-    private modal: NzModalRef,
-    private httpClient: HttpClient,
-    private http: HttpService,
-    public msg: NzMessageService,
-    public router: Router,
-  ) {}
+  private updateImage = false;
+  constructor(private modal: NzModalRef, private http: HttpService, public msg: NzMessageService, public router: Router) {}
   ngOnInit(): void {
     this.http.getChapters().subscribe((res) => {
       this.chapterOptions = res.map((c) => {
@@ -68,6 +63,16 @@ export class TeacherCreateQuestionComponent implements OnInit {
         this.selectType = t;
       }
     });
+    if (this.imageUrl) {
+      this.imagesList = [
+        {
+          uid: '-1',
+          name: this.imageUrl,
+          status: 'done',
+          url: `http://qm2wx81ov.hn-bkt.clouddn.com/question-${this.questionId}-${this.imageUrl}`,
+        },
+      ];
+    }
   }
   ok(): void {
     this.answerList = this.answerList.map((val, idx) => {
@@ -78,7 +83,19 @@ export class TeacherCreateQuestionComponent implements OnInit {
     });
     if (this.questionId) {
       this.http.updateQuestion(this.questionId, this.getHttpJson()).subscribe(() => {
-        this.msg.success('修改成功');
+        if (this.updateImage && this.imagesList.length > 0) {
+          this.handleUpload(this.questionId).subscribe(
+            () => {
+              this.uploading = false;
+              this.imagesList = [];
+              this.msg.success('修改成功');
+            },
+            () => {
+              this.uploading = false;
+              this.msg.error('上传图片失败.');
+            },
+          );
+        }
       });
     } else {
       this.uploading = true;
@@ -105,7 +122,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       explanation: this.explanation,
       chapterId: this.selectChapter.value,
       answerList: this.answerList,
-      imageAddress: this.imagesList.length > 0 ? this.imagesList[0].name : '',
+      imageUrl: this.imagesList.length > 0 ? this.imagesList[0].name : '',
     };
   }
   cancle(): void {
@@ -126,10 +143,11 @@ export class TeacherCreateQuestionComponent implements OnInit {
     this.answerList.push({});
   }
   beforeUpload = (file: NzUploadFile): boolean => {
+    this.updateImage = true;
     this.imagesList = this.imagesList.concat(file);
     return false;
   };
-  handleUpload(questionId: number): Observable<any> {
+  private handleUpload(questionId: number): Observable<any> {
     return this.http.uploadImage(this.imagesList, questionId);
   }
 }

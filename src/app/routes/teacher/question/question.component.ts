@@ -18,6 +18,7 @@ interface Question {
   updatedAt: Date;
   answerList: Answer[];
   disabled: boolean;
+  imageUrl: string;
 }
 
 interface Answer {
@@ -88,6 +89,7 @@ export class TeacherQuestionComponent implements OnInit {
         explanation: question.explanation,
         chapterId: question.chapterId,
         answerList: question.answerList,
+        imageUrl: question.imageUrl,
       },
     });
     modal.afterClose.subscribe((res) => {

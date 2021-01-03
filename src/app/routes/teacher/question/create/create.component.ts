@@ -89,31 +89,44 @@ export class TeacherCreateQuestionComponent implements OnInit {
               this.uploading = false;
               this.imagesList = [];
               this.msg.success('修改成功');
+              this.modal.destroy({ data: 'ok' });
             },
             () => {
               this.uploading = false;
               this.msg.error('上传图片失败.');
+              this.modal.destroy({ data: 'failed' });
             },
           );
+        } else {
+          this.uploading = false;
+          this.msg.success('修改成功');
+          this.modal.destroy({ data: 'ok' });
         }
       });
     } else {
       this.uploading = true;
       this.http.createQuestion(this.getHttpJson()).subscribe((res) => {
-        this.handleUpload(res.id).subscribe(
-          () => {
-            this.uploading = false;
-            this.imagesList = [];
-            this.msg.success('创建成功');
-          },
-          () => {
-            this.uploading = false;
-            this.msg.error('上传图片失败.');
-          },
-        );
+        if (this.updateImage && this.imagesList.length > 0) {
+          this.handleUpload(res.id).subscribe(
+            () => {
+              this.uploading = false;
+              this.imagesList = [];
+              this.msg.success('创建成功');
+              this.modal.destroy({ data: 'ok' });
+            },
+            () => {
+              this.uploading = false;
+              this.msg.error('上传图片失败.');
+              this.modal.destroy({ data: 'failed' });
+            },
+          );
+        } else {
+          this.uploading = false;
+          this.msg.success('创建成功');
+          this.modal.destroy({ data: 'ok' });
+        }
       });
     }
-    this.modal.destroy({ data: 'ok' });
   }
   private getHttpJson(): any {
     return {

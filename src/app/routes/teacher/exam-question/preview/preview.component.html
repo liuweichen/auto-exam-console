@@ -7,6 +7,9 @@
   <span>试题题目 :</span>
   <div mathjax>{{ content }}</div>
   <br />
+  <span>试题图片 :</span>
+  <nz-upload [(nzFileList)]="imagesList"> </nz-upload>
+  <br />
   <span>试题解析 :</span>
   <div mathjax>{{ explanation }}</div>
   <br />

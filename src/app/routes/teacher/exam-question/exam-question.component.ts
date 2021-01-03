@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { HttpService } from 'src/app/core/http/http.service';
 import { TeacherExamQuestionPreviewComponent } from './preview/preview.component';
 
@@ -17,6 +18,7 @@ interface Question {
   updatedAt: Date;
   disabled: boolean;
   answerList: any[];
+  imageUrl: string;
 }
 
 @Component({
@@ -59,6 +61,17 @@ export class TeacherExamQuestionComponent implements OnInit {
 
   preview(id: number): void {
     const question = this.listOfData.find((res) => res.id === id);
+    let imagesList: NzUploadFile[] = [];
+    if (question.imageUrl) {
+      imagesList = [
+        {
+          uid: '-1',
+          name: question.imageUrl,
+          status: 'done',
+          url: `http://qm2wx81ov.hn-bkt.clouddn.com/question-${question.id}-${question.imageUrl}`,
+        },
+      ];
+    }
     this.modal.create({
       nzContent: TeacherExamQuestionPreviewComponent,
       nzComponentParams: {
@@ -68,6 +81,7 @@ export class TeacherExamQuestionComponent implements OnInit {
         explanation: question.explanation,
         chapterId: question.chapterId,
         answerList: question.answerList,
+        imagesList: imagesList,
       },
     });
   }

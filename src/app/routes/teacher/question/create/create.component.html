@@ -21,7 +21,7 @@
   <div *ngIf="previewOn" mathjax>{{ content }}</div>
   <br />
   <br />
-  <span>上传图片 :</span>
+  <span>试题图片 :</span>
   <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzFileType]="fileType">
     <button nz-button [disabled]="imagesList.length > 0"><i nz-icon nzType="upload"></i>可选</button>
   </nz-upload>

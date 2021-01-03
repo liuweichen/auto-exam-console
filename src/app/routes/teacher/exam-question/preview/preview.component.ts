@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Answer } from 'src/app/shared/model/Answer';
 
 @Component({
@@ -17,6 +18,7 @@ export class TeacherExamQuestionPreviewComponent implements OnInit {
   explanation: string;
   chapterId: number;
   answerList: Answer[];
+  imagesList: NzUploadFile[] = [];
   constructor(private modal: NzModalRef, public msg: NzMessageService, public router: Router) {}
   ngOnInit(): void {}
   cancle(): void {

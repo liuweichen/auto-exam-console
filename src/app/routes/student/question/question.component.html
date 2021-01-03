@@ -11,6 +11,13 @@
 </div>
 <br />
 <br />
+<div *ngIf="question.imageUrl">
+  <span>试题图片 :</span>
+  <br />
+  <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
+  <br />
+  <br />
+</div>
 <span>选项 :</span>
 <div>
   <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">

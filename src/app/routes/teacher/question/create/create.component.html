@@ -22,9 +22,13 @@
   <br />
   <br />
   <span>试题图片 :</span>
-  <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzFileType]="fileType">
+  <br />
+  <nz-upload *ngIf="!previewOn" [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzFileType]="fileType">
     <button nz-button [disabled]="imagesList.length > 0"><i nz-icon nzType="upload"></i>可选</button>
   </nz-upload>
+  <a *ngIf="previewOn && imagesList[0]" [href]="imagesList[0].url" target="_blank">
+    <img [src]="imagesList[0].url" />
+  </a>
   <br />
   <span>试题解析 :</span>
   <textarea *ngIf="!previewOn" nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
@@ -52,7 +56,8 @@
   </div>
   <div *ngIf="previewOn">
     <div mathjax *ngFor="let answer of answerList; let i = index">
-      <label nz-radio [nzValue]="i"></label>
+      <i class="option-icon" *ngIf="radioValue === i" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+      <i class="option-icon" *ngIf="radioValue != i" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
       {{ answer.content }}
     </div>
   </div>

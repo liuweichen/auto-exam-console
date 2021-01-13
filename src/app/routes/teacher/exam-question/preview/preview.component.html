@@ -8,16 +8,22 @@
   <div mathjax>{{ content }}</div>
   <br />
   <span>试题图片 :</span>
-  <nz-upload [(nzFileList)]="imagesList"> </nz-upload>
   <br />
+  <div *ngIf="imagesList[0]">
+    <a [href]="imagesList[0].url" target="_blank">
+      <img [src]="imagesList[0].url" />
+    </a>
+    <br />
+    <br />
+  </div>
   <span>试题解析 :</span>
   <div mathjax>{{ explanation }}</div>
   <br />
   <span>选项 :</span>
   <div>
     <div mathjax *ngFor="let answer of answerList; let i = index">
-      <i *ngIf="answer.isSelected" nz-icon nzType="check-circle" nzTheme="twotone"></i>
-      <i *ngIf="!answer.isSelected" nz-icon nzType="close-circle" nzTheme="twotone"></i>
+      <i class="option-icon" *ngIf="answer.isSelected" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+      <i class="option-icon" *ngIf="!answer.isSelected" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
       {{ answer.content }}
     </div>
   </div>

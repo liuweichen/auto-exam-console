@@ -6,8 +6,8 @@
 <span>{{ question.id + ' 试题题目 :' }}</span>
 <br />
 <br />
-<div>
-  <span mathjax>{{ question.content }}</span>
+<div *ngFor="let content of [question.content]">
+  <span mathjax>{{ content }}</span>
 </div>
 <br />
 <br />

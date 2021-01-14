@@ -1,19 +1,23 @@
 <div>
   <h2>创建章节</h2>
-  <nz-form-item>
-    <nz-form-label nzFor="status">所属课程</nz-form-label>
-    <nz-form-control>
-      <nz-select style="width: 360px" [(ngModel)]="selectCourse" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
-        <nz-option *ngFor="let i of courseOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <span>章节名称 :</span>
-  <input type="text" nz-input placeholder="章节名称" [(ngModel)]="name" />
-  <br />
-  <br />
-  <span>章节介绍 :</span>
-  <textarea type="text" nz-input nzAutosize placeholder="章节介绍" [(ngModel)]="description"></textarea>
+  <nz-space nzDirection="vertical">
+    <nz-form-item>
+      <nz-form-label nzFor="status">所属课程</nz-form-label>
+      <nz-form-control>
+        <nz-select style="width: 360px" [(ngModel)]="selectCourse" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
+          <nz-option *ngFor="let i of courseOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-space-item>
+      <nz-form-label>章节名称</nz-form-label>
+      <input type="text" nz-input placeholder="章节名称" [(ngModel)]="name" />
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>章节介绍</nz-form-label>
+      <textarea type="text" nz-input nzAutosize placeholder="章节介绍" [(ngModel)]="description"></textarea>
+    </nz-space-item>
+  </nz-space>
   <div *nzModalFooter>
     <button nz-button nzType="default" (click)="cancle()">取消</button>
     <button nz-button nzType="primary" (click)="ok()">确认</button>

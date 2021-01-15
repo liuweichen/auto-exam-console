@@ -1,32 +1,37 @@
 <div>
   <h2>预览试题</h2>
-  <div>所属章节ID :{{ chapterId }}</div>
-  <br />
-  <div>试题类型 :{{ type === 1 ? '单选' : '多选' }}</div>
-  <br />
-  <span>试题题目 :</span>
-  <div mathjax>{{ content }}</div>
-  <br />
-  <span>试题图片 :</span>
-  <br />
-  <div *ngIf="imagesList[0]">
-    <a [href]="imagesList[0].url" target="_blank">
-      <img [src]="imagesList[0].url" />
-    </a>
-    <br />
-    <br />
-  </div>
-  <span>试题解析 :</span>
-  <div mathjax>{{ explanation }}</div>
-  <br />
-  <span>选项 :</span>
-  <div>
-    <div mathjax *ngFor="let answer of answerList; let i = index">
-      <i class="option-icon" *ngIf="answer.isSelected" nz-icon nzType="check-circle" nzTheme="twotone"></i>
-      <i class="option-icon" *ngIf="!answer.isSelected" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
-      {{ answer.content }}
-    </div>
-  </div>
+  <nz-space nzDirection="vertical">
+    <nz-space-item>
+      <nz-form-label>所属章节</nz-form-label>
+      <span>{{ chapterId }}</span>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>试题类型</nz-form-label>
+      <span>{{ type === 1 ? '单选' : '多选' }}</span>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>试题题目</nz-form-label>
+      <div mathjax>{{ content }}</div>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>试题图片</nz-form-label>
+      <a *ngIf="imagesList[0]" [href]="imagesList[0].url" target="_blank">
+        <img [src]="imagesList[0].url" />
+      </a>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>试题解析</nz-form-label>
+      <div mathjax>{{ explanation }}</div>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>选项</nz-form-label>
+      <div mathjax *ngFor="let answer of answerList; let i = index">
+        <i class="option-icon" *ngIf="answer.isSelected" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+        <i class="option-icon" *ngIf="!answer.isSelected" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
+        {{ answer.content }}
+      </div>
+    </nz-space-item>
+  </nz-space>
   <div *nzModalFooter>
     <button nz-button nzType="primary" (click)="cancle()">取消</button>
   </div>

@@ -1,7 +1,7 @@
 <div>
   <h2>{{ questionId ? '修改试题' : '创建试题' }}</h2>
   <nz-form-item>
-    <nz-form-label nzFor="status">所属章节</nz-form-label>
+    <nz-form-label>所属章节</nz-form-label>
     <nz-form-control>
       <nz-select style="width: 360px" [(ngModel)]="selectChapter" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
         <nz-option *ngFor="let i of chapterOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
@@ -9,57 +9,77 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label nzFor="status">试题类型</nz-form-label>
+    <nz-form-label>试题类型</nz-form-label>
     <nz-form-control>
       <nz-select style="width: 360px" [(ngModel)]="selectType" [nzPlaceHolder]="'请选择'" [nzShowSearch]="false">
         <nz-option *ngFor="let i of typeOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
-  <span>试题题目 :</span>
-  <textarea *ngIf="!previewOn" nz-input placeholder="试题题目" [(ngModel)]="content" nzAutosize></textarea>
-  <div *ngIf="previewOn" mathjax>{{ content }}</div>
-  <br />
-  <br />
-  <span>试题图片 :</span>
-  <br />
-  <nz-upload *ngIf="!previewOn" [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzFileType]="fileType">
-    <button nz-button [disabled]="imagesList.length > 0"><i nz-icon nzType="upload"></i>可选</button>
-  </nz-upload>
-  <a *ngIf="previewOn && imagesList[0]" [href]="imagesList[0].url" target="_blank">
-    <img [src]="imagesList[0].url" />
-  </a>
-  <br />
-  <span>试题解析 :</span>
-  <textarea *ngIf="!previewOn" nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
-  <div *ngIf="previewOn" mathjax>{{ explanation }}</div>
-  <br />
-  <br />
-  <span>选项 :</span>
   <div *ngIf="!previewOn">
-    <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
-      <div style="float: left; margin-top: auto">
-        <label nz-radio [nzValue]="i"></label>
-        <textarea placeholder="选项内容" nz-input [(ngModel)]="answer.content" nzAutosize></textarea>
-      </div>
-    </nz-radio-group>
-    <div>
-      <ul class="alain-default__nav">
-        <li class="alain-default__nav-item" (click)="addInput()">
-          <i nz-icon nzType="plus-circle" nzTheme="twotone"></i>
-        </li>
-        <li class="alain-default__nav-item" (click)="removeLastInput()">
-          <i nz-icon nzType="minus-circle" nzTheme="twotone"></i>
-        </li>
-      </ul>
-    </div>
+    <nz-space nzDirection="vertical">
+      <nz-space-item>
+        <nz-form-label>试题题目</nz-form-label>
+        <textarea nz-input placeholder="试题题目" [(ngModel)]="content" nzAutosize></textarea>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-form-label>试题图片</nz-form-label>
+        <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzFileType]="fileType">
+          <button nz-button [disabled]="imagesList.length > 0"><i nz-icon nzType="upload"></i>可选</button>
+        </nz-upload>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-form-label>试题解析</nz-form-label>
+        <textarea nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-form-label>选项</nz-form-label>
+        <div>
+          <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
+            <div style="float: left; margin-top: auto">
+              <label nz-radio [nzValue]="i"></label>
+              <textarea placeholder="选项内容" nz-input [(ngModel)]="answer.content" nzAutosize></textarea>
+            </div>
+          </nz-radio-group>
+          <div>
+            <ul class="alain-default__nav">
+              <li class="alain-default__nav-item" (click)="addInput()">
+                <i nz-icon nzType="plus-circle" nzTheme="twotone"></i>
+              </li>
+              <li class="alain-default__nav-item" (click)="removeLastInput()">
+                <i nz-icon nzType="minus-circle" nzTheme="twotone"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nz-space-item>
+    </nz-space>
   </div>
   <div *ngIf="previewOn">
-    <div mathjax *ngFor="let answer of answerList; let i = index">
-      <i class="option-icon" *ngIf="radioValue === i" nz-icon nzType="check-circle" nzTheme="twotone"></i>
-      <i class="option-icon" *ngIf="radioValue != i" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
-      {{ answer.content }}
-    </div>
+    <nz-space nzDirection="vertical">
+      <nz-space-item>
+        <nz-form-label>试题题目</nz-form-label>
+        <div mathjax>{{ content }}</div>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-form-label>试题图片</nz-form-label>
+        <a *ngIf="imagesList[0]" [href]="imagesList[0].url" target="_blank">
+          <img [src]="imagesList[0].url" />
+        </a>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-form-label>试题解析</nz-form-label>
+        <div mathjax>{{ explanation }}</div>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-form-label>选项</nz-form-label>
+        <div mathjax *ngFor="let answer of answerList; let i = index">
+          <i class="option-icon" *ngIf="radioValue === i" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+          <i class="option-icon" *ngIf="radioValue != i" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
+          {{ answer.content }}
+        </div>
+      </nz-space-item>
+    </nz-space>
   </div>
   <div *nzModalFooter>
     <button *ngIf="!previewOn" nz-button nzType="default" (click)="preview(true)">预览</button>

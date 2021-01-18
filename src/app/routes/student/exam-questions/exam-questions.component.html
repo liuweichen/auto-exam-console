@@ -1,42 +1,44 @@
 <page-header></page-header>
 
 <div *ngFor="let question of listOfData; let i = index">
-  <span>试题类型 :</span>
-  <span>{{ question.type === 1 ? '单选' : question.type === 2 ? '多选' : '' }}</span>
-  <br />
-  <br />
-  <span>{{ question.id + ' 试题题目 :' }}</span>
-  <br />
-  <br />
-  <div>
-    <span mathjax>{{ question.content }}</span>
-  </div>
-  <br />
-  <br />
-  <div *ngIf="question.imageUrl">
-    <span>试题图片 :</span>
-    <br />
-    <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
-    <br />
-    <br />
-  </div>
-  <span>选项 :</span>
-  <div>
-    <nz-radio-group [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
-      <label mathjax nz-radio [nzValue]="i">{{ answer.content }} </label>
-    </nz-radio-group>
-  </div>
-  <br />
-  <br />
-  <div *ngIf="submitFlag">
-    <span>答案 :</span>
-    <div mathjax>
-      {{ question.rightAnster }}
+  <nz-space nzDirection="vertical">
+    <nz-space-item>
+      <nz-form-label>试题类型</nz-form-label>
+      <span>{{ question.type === 1 ? '单选' : question.type === 2 ? '多选' : '' }}</span>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>试题题目</nz-form-label>
+      <div>
+        <span mathjax>{{ question.content }}</span>
+      </div>
+    </nz-space-item>
+    <nz-space-item *ngIf="question.imageUrl">
+      <nz-form-label>试题图片</nz-form-label>
+      <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>选项</nz-form-label>
+      <div>
+        <nz-radio-group [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
+          <label mathjax nz-radio [nzValue]="i">{{ answer.content }} </label>
+        </nz-radio-group>
+      </div>
+    </nz-space-item>
+    <div *ngIf="submitFlag">
+      <nz-space-item>
+        <nz-form-label>答案</nz-form-label>
+        <div mathjax>
+          {{ question.rightAnster }}
+        </div>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-form-label>解析</nz-form-label>
+        <div mathjax>
+          {{ question.explanation }}
+        </div>
+      </nz-space-item>
     </div>
-    <span>解析 :</span>
-    <div mathjax>
-      {{ question.explanation }}
-    </div>
-  </div>
+  </nz-space>
+  <hr />
 </div>
 <button nz-button nzType="primary" (click)="submit()">交卷</button>

@@ -23,7 +23,6 @@ export class TeacherCreateQuestionComponent implements OnInit {
   answerList: any[] = [{}, {}, {}, {}];
   selectChapter;
   chapterOptions = [];
-  selectType;
   imageUrl;
   typeOptions = [
     {
@@ -35,6 +34,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       value: 2,
     },
   ];
+  selectType = this.typeOptions[0];
   previewOn: Boolean;
   uploading = false;
   imagesList: NzUploadFile[] = [];
@@ -76,10 +76,19 @@ export class TeacherCreateQuestionComponent implements OnInit {
   }
   ok(): void {
     this.answerList = this.answerList.map((val, idx) => {
-      return {
-        content: val.content,
-        isSelected: idx === this.radioValue,
-      };
+      if (this.selectType.value === 1) {
+        return {
+          content: val.content,
+          isSelected: idx === this.radioValue,
+        };
+      } else if (this.selectType.value === 2) {
+        return {
+          content: val.content,
+          isSelected: val.isSelected === true,
+        };
+      } else {
+        return val;
+      }
     });
     if (this.questionId) {
       this.http.updateQuestion(this.questionId, this.getHttpJson()).subscribe(() => {

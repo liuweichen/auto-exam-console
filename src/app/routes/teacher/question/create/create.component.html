@@ -32,7 +32,7 @@
         <nz-form-label>试题解析</nz-form-label>
         <textarea nz-input placeholder="试题解析" [(ngModel)]="explanation" nzAutosize></textarea>
       </nz-space-item>
-      <nz-space-item>
+      <nz-space-item *ngIf="selectType.value === 1">
         <nz-form-label>选项</nz-form-label>
         <div>
           <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
@@ -53,6 +53,25 @@
           </div>
         </div>
       </nz-space-item>
+      <div *ngIf="selectType.value === 2">
+        <nz-space nzDirection="vertical">
+          <nz-space-item>
+            <nz-form-label>选项</nz-form-label>
+          </nz-space-item>
+          <nz-space-item *ngFor="let answer of answerList">
+            <label class="check-box" nz-checkbox [(ngModel)]="answer.isSelected"></label>
+            <textarea placeholder="选项内容" nz-input [(ngModel)]="answer.content" nzAutosize></textarea>
+          </nz-space-item>
+        </nz-space>
+        <ul class="alain-default__nav">
+          <li class="alain-default__nav-item" (click)="addInput()">
+            <i nz-icon nzType="plus-circle" nzTheme="twotone"></i>
+          </li>
+          <li class="alain-default__nav-item" (click)="removeLastInput()">
+            <i nz-icon nzType="minus-circle" nzTheme="twotone"></i>
+          </li>
+        </ul>
+      </div>
     </nz-space>
   </div>
   <div *ngIf="previewOn">
@@ -73,10 +92,26 @@
       </nz-space-item>
       <nz-space-item>
         <nz-form-label>选项</nz-form-label>
-        <div mathjax *ngFor="let answer of answerList; let i = index">
-          <i class="option-icon" *ngIf="radioValue === i" nz-icon nzType="check-circle" nzTheme="twotone"></i>
-          <i class="option-icon" *ngIf="radioValue != i" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
-          {{ answer.content }}
+        <div *ngIf="selectType.value === 1">
+          <div mathjax *ngFor="let answer of answerList; let i = index">
+            <i class="option-icon" *ngIf="radioValue === i" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+            <i class="option-icon" *ngIf="radioValue != i" nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
+            {{ answer.content }}
+          </div>
+        </div>
+        <div *ngIf="selectType.value === 2">
+          <div mathjax *ngFor="let answer of answerList; let i = index">
+            <i class="option-icon" *ngIf="answer.isSelected" nz-icon nzType="check-circle" nzTheme="twotone"></i>
+            <i
+              class="option-icon"
+              *ngIf="!answer.isSelected"
+              nz-icon
+              nzType="close-circle"
+              nzTheme="twotone"
+              [nzTwotoneColor]="'#eb2f96'"
+            ></i>
+            {{ answer.content }}
+          </div>
         </div>
       </nz-space-item>
     </nz-space>

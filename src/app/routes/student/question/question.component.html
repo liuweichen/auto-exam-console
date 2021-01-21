@@ -12,9 +12,11 @@
   </nz-space-item>
   <nz-space-item *ngIf="question.imageUrl">
     <nz-form-label>试题图片</nz-form-label>
-    <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
+    <div>
+      <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
+    </div>
   </nz-space-item>
-  <nz-space-item>
+  <nz-space-item *ngIf="question.type === 1">
     <nz-form-label>选项</nz-form-label>
     <div>
       <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
@@ -22,11 +24,22 @@
       </nz-radio-group>
     </div>
   </nz-space-item>
+  <nz-space-item *ngIf="question.type === 2">
+    <nz-space nzDirection="vertical">
+      <nz-space-item>
+        <nz-form-label>选项</nz-form-label>
+        <nz-space-item *ngFor="let answer of answerList">
+          <label class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
+          {{ answer.content }}
+        </nz-space-item>
+      </nz-space-item>
+    </nz-space>
+  </nz-space-item>
   <div *ngIf="showRightAnswer">
     <nz-space-item>
       <nz-form-label>答案</nz-form-label>
       <div mathjax>
-        {{ rightAnster.content }}
+        {{ rightAnster ? rightAnster.content : '' }}
       </div>
     </nz-space-item>
     <nz-space-item>
@@ -40,4 +53,16 @@
 <div>
   <button nz-button nzType="default" (click)="lastQuestion()">上一题</button>
   <button nz-button nzType="primary" (click)="nextQuestion()">下一题</button>
+  <button *ngIf="question.type === 2" nz-button nzType="primary" (click)="selectMutilAnswer()">确定</button>
+</div>
+<div class="margin-top">
+  <label class="margin-right color-gray" nz-checkbox [(ngModel)]="autoNext">答对自动下一题</label>
+  <span class="margin-right">
+    <span class="color-gray">答对:</span>
+    <span class="color-green">{{ rightCount }}题</span>
+  </span>
+  <span>
+    <span class="color-gray">答错:</span>
+    <span class="color-red">{{ falseCount }}题</span>
+  </span>
 </div>

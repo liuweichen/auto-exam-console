@@ -16,7 +16,7 @@
       <nz-form-label>试题图片</nz-form-label>
       <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
     </nz-space-item>
-    <nz-space-item>
+    <nz-space-item *ngIf="question.type === 1">
       <nz-form-label>选项</nz-form-label>
       <div>
         <nz-radio-group [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
@@ -24,11 +24,22 @@
         </nz-radio-group>
       </div>
     </nz-space-item>
+    <nz-space-item *ngIf="question.type === 2">
+      <nz-space nzDirection="vertical">
+        <nz-space-item>
+          <nz-form-label>选项</nz-form-label>
+          <nz-space-item *ngFor="let answer of question.answerList">
+            <label class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
+            {{ answer.content }}
+          </nz-space-item>
+        </nz-space-item>
+      </nz-space>
+    </nz-space-item>
     <div *ngIf="submitFlag">
       <nz-space-item>
         <nz-form-label>答案</nz-form-label>
         <div mathjax>
-          {{ question.rightAnster }}
+          {{ question.rightAnswer ? question.rightAnswer.content : '' }}
         </div>
       </nz-space-item>
       <nz-space-item>

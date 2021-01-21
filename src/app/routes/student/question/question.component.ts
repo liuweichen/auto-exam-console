@@ -2,8 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Params } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/core/http/http.service';
-import { Answer } from 'src/app/shared/model/Answer';
 import { Question } from 'src/app/shared/model/Question';
+
+interface Answer {
+  id: number;
+  content: string;
+  isSelected: boolean;
+  questionId: number;
+  userSelected: boolean;
+}
 
 @Component({
   selector: 'app-student-question',
@@ -25,6 +32,9 @@ export class StudentQuestionComponent implements OnInit {
   private totalPages: number;
   radioValue: number;
   listOfData: Question[] = [];
+  autoNext = true;
+  rightCount = 0;
+  falseCount = 0;
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.chapterId = params.chapter_id;
@@ -35,7 +45,20 @@ export class StudentQuestionComponent implements OnInit {
 
   selectAnswer(answer: Answer): void {
     setTimeout(() => {
-      if (answer.isSelected) {
+      answer.isSelected ? this.rightCount++ : this.falseCount++;
+      if (answer.isSelected && this.autoNext) {
+        this.nextQuestion();
+      } else {
+        this.showRightAnswer = true;
+      }
+    }, 500);
+  }
+
+  selectMutilAnswer(): void {
+    setTimeout(() => {
+      const isRight = this.answerList.filter((a) => (a.userSelected || a.isSelected) && a.isSelected !== a.userSelected).length === 0;
+      isRight ? this.rightCount++ : this.falseCount++;
+      if (isRight && this.autoNext) {
         this.nextQuestion();
       } else {
         this.showRightAnswer = true;

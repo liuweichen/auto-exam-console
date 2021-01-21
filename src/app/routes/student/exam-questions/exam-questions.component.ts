@@ -23,7 +23,7 @@ export class StudentExamQuestionsComponent implements OnInit {
   private refresh(): void {
     this.http.studentGetExamQuestions(this.examId).subscribe((res) => {
       res.forEach((q) => {
-        q.rightAnster = q.answerList[q.answerList.findIndex((item) => item.isSelected)].content;
+        q.rightAnster = q.answerList[q.answerList.findIndex((item) => item.isSelected)];
       });
       this.listOfData = res;
     });

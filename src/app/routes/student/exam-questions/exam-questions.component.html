@@ -14,7 +14,9 @@
     </nz-space-item>
     <nz-space-item *ngIf="question.imageUrl">
       <nz-form-label>试题图片</nz-form-label>
-      <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
+      <div>
+        <img [src]="'http://qm2wx81ov.hn-bkt.clouddn.com/question-' + question.id + '-' + question.imageUrl" />
+      </div>
     </nz-space-item>
     <nz-space-item *ngIf="question.type === 1">
       <nz-form-label>选项</nz-form-label>

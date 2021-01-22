@@ -79,26 +79,31 @@ export class StartupService {
                 group: true,
                 children: [
                   {
+                    text: '首页',
+                    link: '/dashboard',
+                    icon: { type: 'icon', value: 'dashboard' },
+                  },
+                  {
                     text: '课程',
                     link: '/teacher/courses',
-                    icon: { type: 'icon', value: 'appstore' },
+                    icon: { type: 'icon', value: 'book' },
                   },
                   {
                     text: '章节',
                     link: '/teacher/chapters',
-                    icon: { type: 'icon', value: 'rocket' },
+                    icon: { type: 'icon', value: 'container' },
                     shortcutRoot: true,
                   },
                   {
                     text: '试题',
                     link: '/teacher/questions',
-                    icon: { type: 'icon', value: 'rocket' },
+                    icon: { type: 'icon', value: 'profile' },
                     shortcutRoot: true,
                   },
                   {
                     text: '试卷',
                     link: '/teacher/exams',
-                    icon: { type: 'icon', value: 'rocket' },
+                    icon: { type: 'icon', value: 'table' },
                     shortcutRoot: true,
                   },
                 ],
@@ -111,25 +116,30 @@ export class StartupService {
                 group: true,
                 children: [
                   {
+                    text: '首页',
+                    link: '/dashboard',
+                    icon: { type: 'icon', value: 'dashboard' },
+                  },
+                  {
                     text: '老师',
                     link: '/student/teachers',
-                    icon: { type: 'icon', value: 'appstore' },
+                    icon: { type: 'icon', value: 'team' },
                   },
                   {
                     text: '课程',
                     link: '/student/courses',
-                    icon: { type: 'icon', value: 'rocket' },
+                    icon: { type: 'icon', value: 'book' },
                   },
                   {
                     text: '章节',
                     link: '/student/chapters',
-                    icon: { type: 'icon', value: 'rocket' },
+                    icon: { type: 'icon', value: 'container' },
                     shortcutRoot: true,
                   },
                   {
                     text: '试卷',
                     link: '/student/exams',
-                    icon: { type: 'icon', value: 'rocket' },
+                    icon: { type: 'icon', value: 'table' },
                     shortcutRoot: true,
                   },
                 ],

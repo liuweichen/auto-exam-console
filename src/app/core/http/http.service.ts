@@ -10,12 +10,21 @@ import { filter, mergeMap } from 'rxjs/operators';
 })
 export class HttpService {
   private userId: string;
+  private hostName: string;
   constructor(private http: _HttpClient, private httpClient: HttpClient) {
     this.http = http;
   }
 
   setUserId(userId: string): void {
     this.userId = userId;
+  }
+
+  setHostName(hostName: string): void {
+    this.hostName = hostName;
+  }
+
+  getHostName(): string {
+    return this.hostName;
   }
 
   getCourses(): Observable<any> {
@@ -122,20 +131,15 @@ export class HttpService {
     return this.http.get(`apiserver/teachers/${this.userId}/token`);
   }
 
-  uploadImage(fileList: NzUploadFile[], questionId: number): Observable<any> {
+  uploadImage(formData: FormData): Observable<any> {
     return this.getUploadToken().pipe(
       mergeMap((token) => {
-        return this.uploadImageWithToken(fileList, questionId, token.token);
+        return this.uploadImageWithToken(formData, token.token);
       }),
     );
   }
 
-  private uploadImageWithToken(fileList: NzUploadFile[], questionId: any, token: string): Observable<any> {
-    const formData = new FormData();
-    fileList.forEach((file: any) => {
-      formData.append('file', file);
-      formData.append('key', 'question-' + questionId + '-' + file.name);
-    });
+  private uploadImageWithToken(formData: FormData, token: string): Observable<any> {
     formData.append('token', token);
     const req = new HttpRequest('POST', 'http://upload-z2.qiniup.com', formData, {
       reportProgress: true,

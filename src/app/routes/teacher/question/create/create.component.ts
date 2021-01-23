@@ -67,12 +67,16 @@ export class TeacherCreateQuestionComponent implements OnInit {
       this.imagesList = [
         {
           uid: '-1',
-          name: this.imageUrl,
+          name: this.getFileName(this.imageUrl),
           status: 'done',
-          url: `http://qm2wx81ov.hn-bkt.clouddn.com/question-${this.questionId}-${this.imageUrl}`,
+          url: `${this.http.getHostName()}/${this.imageUrl}`,
         },
       ];
     }
+  }
+  private getFileName(name: string) {
+    const list = name.split('-');
+    return list[list.length - 1];
   }
   ok(): void {
     this.answerList = this.answerList.map((val, idx) => {
@@ -144,7 +148,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       explanation: this.explanation,
       chapterId: this.selectChapter.value,
       answerList: this.answerList,
-      imageUrl: this.imagesList.length > 0 ? this.imagesList[0].name : '',
+      imageUrl: this.imagesList.length > 0 ? this.getCloudFilePath(this.questionId, this.imagesList[0].name) : '',
     };
   }
   cancle(): void {
@@ -170,6 +174,14 @@ export class TeacherCreateQuestionComponent implements OnInit {
     return false;
   };
   private handleUpload(questionId: number): Observable<any> {
-    return this.http.uploadImage(this.imagesList, questionId);
+    const formData = new FormData();
+    this.imagesList.forEach((file: any) => {
+      formData.append('file', file);
+      formData.append('key', this.getCloudFilePath(questionId, file.name));
+    });
+    return this.http.uploadImage(formData);
+  }
+  private getCloudFilePath(questionId, name): string {
+    return 'question-' + questionId + '-' + name;
   }
 }

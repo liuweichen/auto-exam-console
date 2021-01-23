@@ -70,6 +70,7 @@ export class StartupService {
           res.id = userInfo.userId;
           this.settingService.setUser(res);
           this.http.setUserId(userInfo.userId);
+          this.http.setHostName(userInfo.hostName);
 
           let menu;
           if (userInfo.role === 'teacher') {

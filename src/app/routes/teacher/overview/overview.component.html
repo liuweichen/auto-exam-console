@@ -1,0 +1,59 @@
+<page-header></page-header>
+<div nz-row nzGutter="16">
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-green text-white text-center rounded-md">
+      <div nz-col nzSpan="10" class="p-md">
+        <i nz-icon nzType="book" class="display-1"></i>
+      </div>
+      <div nz-col nzSpan="14" class="py-md">
+        <h1 class="text-white mb0">{{ overview.courseCount }}</h1>
+        <div>课程</div>
+      </div>
+      <a nz-col nzSpan="24" (click)="goTo('/teacher/courses')" class="d-block p-sm bg-grey-darker text-white">
+        <div class="float-left">详情</div>
+      </a>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-primary text-white text-center rounded-md">
+      <div nz-col nzSpan="10" class="p-md">
+        <i nz-icon nzType="container" class="display-1"></i>
+      </div>
+      <div nz-col nzSpan="14" class="py-md">
+        <h1 class="text-white mb0">{{ overview.chapterCount }}</h1>
+        <div>章节</div>
+      </div>
+      <a nz-col nzSpan="24" (click)="goTo('/teacher/chapters')" class="d-block p-sm bg-grey-darker text-white">
+        <div class="float-left">详情</div>
+      </a>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-warning text-white text-center rounded-md">
+      <div nz-col nzSpan="10" class="p-md">
+        <i nz-icon nzType="profile" class="display-1"></i>
+      </div>
+      <div nz-col nzSpan="14" class="py-md">
+        <h1 class="text-white mb0">{{ overview.questionCount }}</h1>
+        <div>试题</div>
+      </div>
+      <a nz-col nzSpan="24" (click)="goTo('/teacher/questions')" class="d-block p-sm bg-grey-darker text-white">
+        <div class="float-left">详情</div>
+      </a>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-red text-white text-center rounded-md">
+      <div nz-col nzSpan="10" class="p-md">
+        <i nz-icon nzType="table" class="display-1"></i>
+      </div>
+      <div nz-col nzSpan="14" class="py-md">
+        <h1 class="text-white mb0">{{ overview.examCount }}</h1>
+        <div>试卷</div>
+      </div>
+      <a nz-col nzSpan="24" (click)="goTo('/teacher/exams')" class="d-block p-sm bg-grey-darker text-white">
+        <div class="float-left">详情</div>
+      </a>
+    </div>
+  </div>
+</div>

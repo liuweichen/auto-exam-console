@@ -80,8 +80,8 @@ export class StartupService {
                 group: true,
                 children: [
                   {
-                    text: '首页',
-                    link: '/dashboard',
+                    text: '总览',
+                    link: '/teacher/overview',
                     icon: { type: 'icon', value: 'dashboard' },
                   },
                   {
@@ -117,8 +117,8 @@ export class StartupService {
                 group: true,
                 children: [
                   {
-                    text: '首页',
-                    link: '/dashboard',
+                    text: '总览',
+                    link: '/student/overview',
                     icon: { type: 'icon', value: 'dashboard' },
                   },
                   {

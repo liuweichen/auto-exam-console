@@ -5,8 +5,11 @@ import { TeacherCourseComponent } from './course/course.component';
 import { TeacherQuestionComponent } from './question/question.component';
 import { TeacherExamComponent } from './exam/exam.component';
 import { TeacherExamQuestionComponent } from './exam-question/exam-question.component';
+import { TeacherOverviewComponent } from './overview/overview.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'overview', pathMatch: 'full' },
+  { path: 'overview', component: TeacherOverviewComponent },
   { path: 'courses', component: TeacherCourseComponent },
   { path: 'chapters', component: TeacherChapterComponent },
   { path: 'questions', component: TeacherQuestionComponent },

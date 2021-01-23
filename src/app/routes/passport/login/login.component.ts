@@ -63,6 +63,7 @@ export class UserLoginComponent implements OnDestroy {
     let url: string;
     let name: string;
     let password: string;
+    let role: string = '';
     if (this.type === 0) {
       this.studentName.markAsDirty();
       this.studentName.updateValueAndValidity();
@@ -74,6 +75,7 @@ export class UserLoginComponent implements OnDestroy {
       url = 'apiserver/login/student';
       name = this.studentName.value;
       password = this.studentPassword.value;
+      role = 'student';
     } else {
       this.teacherName.markAsDirty();
       this.teacherName.updateValueAndValidity();
@@ -85,6 +87,7 @@ export class UserLoginComponent implements OnDestroy {
       url = 'apiserver/login/teacher';
       name = this.teacherName.value;
       password = this.teacherPassword.value;
+      role = 'teacher';
     }
 
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
@@ -101,9 +104,10 @@ export class UserLoginComponent implements OnDestroy {
         this.tokenService.set(res);
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
         this.startupSrv.load().then(() => {
-          let url = this.tokenService.referrer!.url || '/';
+          const dashboardUrl = '/' + role;
+          let url = this.tokenService.referrer!.url || dashboardUrl;
           if (url.includes('/login')) {
-            url = '/';
+            url = dashboardUrl;
           }
           this.router.navigateByUrl(url);
         });

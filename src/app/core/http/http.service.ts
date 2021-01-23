@@ -27,6 +27,10 @@ export class HttpService {
     return this.hostName;
   }
 
+  getOverview(): Observable<any> {
+    return this.http.get(`apiserver/teachers/${this.userId}/overview`);
+  }
+
   getCourses(): Observable<any> {
     return this.http.get(`apiserver/teachers/${this.userId}/courses`);
   }

@@ -13,8 +13,10 @@ import { TeacherRoutingModule } from './teacher-routing.module';
 import { TeacherAddQuestionToExamComponent } from './question/add2exam/add2exam.component';
 import { TeacherExamQuestionComponent } from './exam-question/exam-question.component';
 import { TeacherExamQuestionPreviewComponent } from './exam-question/preview/preview.component';
+import { TeacherOverviewComponent } from './overview/overview.component';
 
 const COMPONENTS: Type<void>[] = [
+  TeacherOverviewComponent,
   TeacherCourseComponent,
   TeacherChapterComponent,
   TeacherQuestionComponent,

@@ -69,7 +69,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
           uid: '-1',
           name: this.getFileName(this.imageUrl),
           status: 'done',
-          url: `${this.http.getHostName()}/${this.imageUrl}`,
+          url: this.imageUrl,
         },
       ];
     }
@@ -148,7 +148,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       explanation: this.explanation,
       chapterId: this.selectChapter.value,
       answerList: this.answerList,
-      imageUrl: this.imagesList.length > 0 ? this.getCloudFilePath(this.questionId, this.imagesList[0].name) : '',
+      imageUrl: this.imagesList.length > 0 ? this.getCloudFileFullPath(this.questionId, this.imagesList[0].name) : '',
     };
   }
   cancle(): void {
@@ -183,5 +183,8 @@ export class TeacherCreateQuestionComponent implements OnInit {
   }
   private getCloudFilePath(questionId, name): string {
     return 'question-' + questionId + '-' + name;
+  }
+  private getCloudFileFullPath(questionId, name): string {
+    return `${this.http.getHostName()}/${this.getCloudFilePath(questionId, name)}`;
   }
 }

@@ -18,7 +18,7 @@ export class TeacherExamQuestionPreviewComponent implements OnInit {
   explanation: string;
   chapterId: number;
   answerList: Answer[];
-  imagesList: NzUploadFile[] = [];
+  imageUrl: string;
   constructor(private modal: NzModalRef, public msg: NzMessageService, public router: Router) {}
   ngOnInit(): void {}
   cancle(): void {

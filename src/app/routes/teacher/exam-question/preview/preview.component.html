@@ -16,8 +16,8 @@
     <nz-space-item>
       <nz-form-label>试题图片</nz-form-label>
       <div>
-        <a *ngIf="imagesList[0]" [href]="imagesList[0].url" target="_blank">
-          <img [src]="imagesList[0].url" />
+        <a *ngIf="imageUrl" [href]="imageUrl" target="_blank">
+          <img [src]="imageUrl" />
         </a>
       </div>
     </nz-space-item>

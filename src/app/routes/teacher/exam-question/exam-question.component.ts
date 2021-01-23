@@ -61,17 +61,6 @@ export class TeacherExamQuestionComponent implements OnInit {
 
   preview(id: number): void {
     const question = this.listOfData.find((res) => res.id === id);
-    let imagesList: NzUploadFile[] = [];
-    if (question.imageUrl) {
-      imagesList = [
-        {
-          uid: '-1',
-          name: question.imageUrl,
-          status: 'done',
-          url: `http://qm2wx81ov.hn-bkt.clouddn.com/question-${question.id}-${question.imageUrl}`,
-        },
-      ];
-    }
     this.modal.create({
       nzContent: TeacherExamQuestionPreviewComponent,
       nzComponentParams: {
@@ -81,7 +70,7 @@ export class TeacherExamQuestionComponent implements OnInit {
         explanation: question.explanation,
         chapterId: question.chapterId,
         answerList: question.answerList,
-        imagesList: imagesList,
+        imageUrl: question.imageUrl,
       },
     });
   }

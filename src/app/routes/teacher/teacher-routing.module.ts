@@ -6,6 +6,7 @@ import { TeacherQuestionComponent } from './question/question.component';
 import { TeacherExamComponent } from './exam/exam.component';
 import { TeacherExamQuestionComponent } from './exam-question/exam-question.component';
 import { TeacherOverviewComponent } from './overview/overview.component';
+import { TeacherSettingsComponent } from './setting/settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'overview', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'questions', component: TeacherQuestionComponent },
   { path: 'exams', component: TeacherExamComponent },
   { path: 'exam-questions', component: TeacherExamQuestionComponent },
+  { path: 'settings', component: TeacherSettingsComponent },
 ];
 
 @NgModule({

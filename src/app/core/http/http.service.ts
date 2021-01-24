@@ -31,6 +31,10 @@ export class HttpService {
     return this.http.get(`apiserver/teachers/${this.userId}/overview`);
   }
 
+  updateTeacher(body: any): Observable<any> {
+    return this.http.put(`apiserver/teachers/${this.userId}`, body);
+  }
+
   getCourses(): Observable<any> {
     return this.http.get(`apiserver/teachers/${this.userId}/courses`);
   }

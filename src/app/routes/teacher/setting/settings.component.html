@@ -1,0 +1,29 @@
+<nz-spin [nzSpinning]="userLoading">
+  <div class="main" *ngIf="user">
+    <div class="left">
+      <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
+        <se label="用户名" error="请输入您的用户名!">
+          <input nz-input disabled type="text" [(ngModel)]="user.name" name="name" />
+        </se>
+        <se label="旧密码" error="请输入您的旧密码!">
+          <input nz-input type="password" [(ngModel)]="user.password" name="password" required />
+        </se>
+        <se label="新密码" error="请输入您的新密码!">
+          <input nz-input type="password" [(ngModel)]="user.newPassword" name="newPassword" required />
+        </se>
+        <se label="个人简介">
+          <textarea
+            nz-input
+            [(ngModel)]="user.description"
+            name="description"
+            [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+            placeholder="个人简介"
+          ></textarea>
+        </se>
+        <se>
+          <button nz-button nzType="primary" [disabled]="f.invalid">更新基本信息</button>
+        </se>
+      </form>
+    </div>
+  </div>
+</nz-spin>

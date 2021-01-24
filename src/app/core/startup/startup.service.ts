@@ -68,6 +68,8 @@ export class StartupService {
           res.avatar = './assets/tmp/img/avatar.jpg';
           res.email = 'xx@qq.com';
           res.id = userInfo.userId;
+          res.role = userInfo.role;
+          res.description = userInfo.description;
           this.settingService.setUser(res);
           this.http.setUserId(userInfo.userId);
           this.http.setHostName(userInfo.hostName);

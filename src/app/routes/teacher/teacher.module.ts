@@ -14,6 +14,7 @@ import { TeacherAddQuestionToExamComponent } from './question/add2exam/add2exam.
 import { TeacherExamQuestionComponent } from './exam-question/exam-question.component';
 import { TeacherExamQuestionPreviewComponent } from './exam-question/preview/preview.component';
 import { TeacherOverviewComponent } from './overview/overview.component';
+import { TeacherSettingsComponent } from './setting/settings.component';
 
 const COMPONENTS: Type<void>[] = [
   TeacherOverviewComponent,
@@ -29,6 +30,7 @@ const COMPONENTS: Type<void>[] = [
   TeacherAddQuestionToExamComponent,
   TeacherExamQuestionComponent,
   TeacherExamQuestionPreviewComponent,
+  TeacherSettingsComponent,
 ];
 const COMPONENTS_NOROUNT: Type<void>[] = [];
 

@@ -5,15 +5,15 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpService } from 'src/app/core/http/http.service';
 
 @Component({
-  selector: 'app-teacher-overview',
+  selector: 'app-sutdent-overview',
   templateUrl: './overview.component.html',
 })
-export class TeacherOverviewComponent implements OnInit {
+export class StudentOverviewComponent implements OnInit {
   constructor(private http: HttpService, public msg: NzMessageService, private router: Router) {}
   overview: any = {};
 
   ngOnInit(): void {
-    this.http.getOverview().subscribe((res) => {
+    this.http.studentGetOverview().subscribe((res) => {
       this.overview = res;
     });
   }

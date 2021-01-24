@@ -151,6 +151,10 @@ export class HttpService {
     return this.httpClient.request(req).pipe(filter((e) => e instanceof HttpResponse));
   }
 
+  studentGetOverview(): Observable<any> {
+    return this.http.get(`apiserver/students/${this.userId}/overview`);
+  }
+
   studentGetTeachers(): Observable<any> {
     return this.http.get(`apiserver/students/${this.userId}/teachers`);
   }

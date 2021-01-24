@@ -4,10 +4,13 @@ import { StudentChapterComponent } from './chapter/chapter.component';
 import { StudentCourseComponent } from './course/course.component';
 import { StudentExamQuestionsComponent } from './exam-questions/exam-questions.component';
 import { StudentExamComponent } from './exam/exam.component';
+import { StudentOverviewComponent } from './overview/overview.component';
 import { StudentQuestionComponent } from './question/question.component';
 import { StudentTeacherComponent } from './teacher/teacher.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'overview', pathMatch: 'full' },
+  { path: 'overview', component: StudentOverviewComponent },
   { path: 'teachers', component: StudentTeacherComponent },
   { path: 'courses', component: StudentCourseComponent },
   { path: 'chapters', component: StudentChapterComponent },

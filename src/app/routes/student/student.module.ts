@@ -4,11 +4,13 @@ import { StudentChapterComponent } from './chapter/chapter.component';
 import { StudentCourseComponent } from './course/course.component';
 import { StudentExamQuestionsComponent } from './exam-questions/exam-questions.component';
 import { StudentExamComponent } from './exam/exam.component';
+import { StudentOverviewComponent } from './overview/overview.component';
 import { StudentQuestionComponent } from './question/question.component';
 import { StudentRoutingModule } from './student-routing.module';
 import { StudentTeacherComponent } from './teacher/teacher.component';
 
 const COMPONENTS: Type<void>[] = [
+  StudentOverviewComponent,
   StudentTeacherComponent,
   StudentCourseComponent,
   StudentChapterComponent,

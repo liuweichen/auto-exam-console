@@ -1,0 +1,27 @@
+<nz-spin [nzSpinning]="userLoading">
+  <div class="main" *ngIf="user">
+    <div class="left">
+      <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
+        <se label="用户名" error="请输入您的用户名!">
+          <input nz-input disabled type="text" [(ngModel)]="user.name" name="name" />
+        </se>
+        <se label="个人简介">
+          <textarea
+            nz-input
+            disabled
+            [(ngModel)]="user.description"
+            name="description"
+            [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+            placeholder="个人简介"
+          ></textarea>
+        </se>
+        <se>
+          <button nz-button nzType="primary" disabled="true">更新基本信息</button>
+        </se>
+        <se>
+          <h3>学生账号为共享账号，不允许修改账号信息</h3>
+        </se>
+      </form>
+    </div>
+  </div>
+</nz-spin>

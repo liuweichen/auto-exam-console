@@ -4,11 +4,11 @@ import { SettingsService } from '@delon/theme';
 import { HttpService } from 'src/app/core/http/http.service';
 
 @Component({
-  selector: 'app-teacher-settings',
+  selector: 'app-student-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.less'],
 })
-export class TeacherSettingsComponent implements OnInit {
+export class StudentSettingsComponent implements OnInit {
   constructor(private http: HttpService, private settings: SettingsService, private msg: NzMessageService) {}
   userLoading = false;
   user!: any;
@@ -19,13 +19,5 @@ export class TeacherSettingsComponent implements OnInit {
       description: this.settings.user.description,
     };
   }
-  save(): void {
-    this.http.updateTeacher(this.user).subscribe(() => {
-      this.msg.success('更新成功');
-      this.user.password = '';
-      this.user.newPassword = '';
-      this.settings.user.name = this.user.name;
-      this.settings.user.description = this.user.description;
-    });
-  }
+  save(): void {}
 }

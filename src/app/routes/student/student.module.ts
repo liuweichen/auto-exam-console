@@ -6,6 +6,7 @@ import { StudentExamQuestionsComponent } from './exam-questions/exam-questions.c
 import { StudentExamComponent } from './exam/exam.component';
 import { StudentOverviewComponent } from './overview/overview.component';
 import { StudentQuestionComponent } from './question/question.component';
+import { StudentSettingsComponent } from './setting/settings.component';
 import { StudentRoutingModule } from './student-routing.module';
 import { StudentTeacherComponent } from './teacher/teacher.component';
 
@@ -17,6 +18,7 @@ const COMPONENTS: Type<void>[] = [
   StudentQuestionComponent,
   StudentExamComponent,
   StudentExamQuestionsComponent,
+  StudentSettingsComponent,
 ];
 const COMPONENTS_NOROUNT: Type<void>[] = [];
 

@@ -6,6 +6,7 @@ import { StudentExamQuestionsComponent } from './exam-questions/exam-questions.c
 import { StudentExamComponent } from './exam/exam.component';
 import { StudentOverviewComponent } from './overview/overview.component';
 import { StudentQuestionComponent } from './question/question.component';
+import { StudentSettingsComponent } from './setting/settings.component';
 import { StudentTeacherComponent } from './teacher/teacher.component';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'questions', component: StudentQuestionComponent },
   { path: 'exams', component: StudentExamComponent },
   { path: 'exam-questions', component: StudentExamQuestionsComponent },
+  { path: 'settings', component: StudentSettingsComponent },
 ];
 
 @NgModule({

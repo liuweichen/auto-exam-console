@@ -95,7 +95,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       }
     });
     if (this.questionId) {
-      this.http.updateQuestion(this.questionId, this.getHttpJson()).subscribe(() => {
+      this.http.updateQuestion(this.questionId, this.getHttpJson(this.questionId)).subscribe(() => {
         if (this.updateImage && this.imagesList.length > 0) {
           this.handleUpload(this.questionId).subscribe(
             () => {
@@ -118,9 +118,10 @@ export class TeacherCreateQuestionComponent implements OnInit {
       });
     } else {
       this.uploading = true;
-      this.http.createQuestion(this.getHttpJson()).subscribe((res) => {
+      const timestamp = new Date().getTime();
+      this.http.createQuestion(this.getHttpJson(timestamp)).subscribe((res) => {
         if (this.updateImage && this.imagesList.length > 0) {
-          this.handleUpload(res.id).subscribe(
+          this.handleUpload(timestamp).subscribe(
             () => {
               this.uploading = false;
               this.imagesList = [];
@@ -141,14 +142,14 @@ export class TeacherCreateQuestionComponent implements OnInit {
       });
     }
   }
-  private getHttpJson(): any {
+  private getHttpJson(questionIdOrTimestamp): any {
     return {
       type: this.selectType.value,
       content: this.content,
       explanation: this.explanation,
       chapterId: this.selectChapter.value,
       answerList: this.answerList,
-      imageUrl: this.imagesList.length > 0 ? this.getCloudFileFullPath(this.questionId, this.imagesList[0].name) : '',
+      imageUrl: this.imagesList.length > 0 ? this.getCloudFileFullPath(questionIdOrTimestamp, this.imagesList[0].name) : '',
     };
   }
   cancle(): void {

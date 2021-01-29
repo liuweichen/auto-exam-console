@@ -149,7 +149,7 @@ export class HttpService {
 
   private uploadImageWithToken(formData: FormData, token: string): Observable<any> {
     formData.append('token', token);
-    const req = new HttpRequest('POST', 'http://upload-z2.qiniup.com', formData, {
+    const req = new HttpRequest('POST', 'https://upload-z2.qiniup.com', formData, {
       reportProgress: true,
     });
     return this.httpClient.request(req).pipe(filter((e) => e instanceof HttpResponse));

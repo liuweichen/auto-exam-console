@@ -69,13 +69,22 @@ export class TeacherCreateQuestionComponent implements OnInit {
           uid: '-1',
           name: this.getFileName(this.imageUrl),
           status: 'done',
-          url: this.imageUrl,
+          url: this.getUrl(this.imageUrl),
         },
       ];
     }
   }
+
+  private getUrl(url): string {
+    if (window.location.port !== '443') {
+      return `${this.http.getHostName()}/${this.imageUrl}`;
+    } else {
+      return `image/${this.imageUrl}`;
+    }
+  }
+
   private getFileName(name: string) {
-    const list = name.split('-');
+    const list = name.split('|');
     return list[list.length - 1];
   }
   ok(): void {
@@ -149,7 +158,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
       explanation: this.explanation,
       chapterId: this.selectChapter.value,
       answerList: this.answerList,
-      imageUrl: this.imagesList.length > 0 ? this.getCloudFileFullPath(questionIdOrTimestamp, this.imagesList[0].name) : '',
+      imageUrl: this.imagesList.length > 0 ? this.getCloudFilePath(questionIdOrTimestamp, this.imagesList[0].name) : '',
     };
   }
   cancle(): void {
@@ -183,9 +192,6 @@ export class TeacherCreateQuestionComponent implements OnInit {
     return this.http.uploadImage(formData);
   }
   private getCloudFilePath(questionId, name): string {
-    return 'question-' + questionId + '-' + name;
-  }
-  private getCloudFileFullPath(questionId, name): string {
-    return `${this.http.getHostName()}/${this.getCloudFilePath(questionId, name)}`;
+    return 'question|' + questionId + '|' + name;
   }
 }

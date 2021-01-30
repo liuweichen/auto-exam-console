@@ -9,7 +9,7 @@ import { HttpService } from 'src/app/core/http/http.service';
   styleUrls: ['./exam-questions.component.less'],
 })
 export class StudentExamQuestionsComponent implements OnInit {
-  constructor(private http: HttpService, private activatedRoute: ActivatedRoute) {}
+  constructor(public http: HttpService, private activatedRoute: ActivatedRoute) {}
   private examId: number;
   submitFlag = false;
   listOfData: any[] = [];

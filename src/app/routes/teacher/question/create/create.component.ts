@@ -69,17 +69,9 @@ export class TeacherCreateQuestionComponent implements OnInit {
           uid: '-1',
           name: this.getFileName(this.imageUrl),
           status: 'done',
-          url: this.getUrl(this.imageUrl),
+          url: this.http.getImageUrl(this.imageUrl),
         },
       ];
-    }
-  }
-
-  private getUrl(url): string {
-    if (window.location.port !== '443') {
-      return `${this.http.getHostName()}/${this.imageUrl}`;
-    } else {
-      return `image/${this.imageUrl}`;
     }
   }
 

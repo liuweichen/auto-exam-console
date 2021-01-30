@@ -27,6 +27,14 @@ export class HttpService {
     return this.hostName;
   }
 
+  getImageUrl(url: string): string {
+    if ('https:' == document.location.protocol) {
+      return `image/${url}`;
+    } else {
+      return `${this.hostName}/${url}`;
+    }
+  }
+
   getOverview(): Observable<any> {
     return this.http.get(`apiserver/teachers/${this.userId}/overview`);
   }

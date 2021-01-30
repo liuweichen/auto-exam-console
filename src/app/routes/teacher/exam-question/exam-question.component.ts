@@ -70,7 +70,7 @@ export class TeacherExamQuestionComponent implements OnInit {
         explanation: question.explanation,
         chapterId: question.chapterId,
         answerList: question.answerList,
-        imageUrl: question.imageUrl,
+        imageUrl: this.http.getImageUrl(question.imageUrl),
       },
     });
   }

@@ -13,7 +13,7 @@
   <nz-space-item *ngIf="question.imageUrl">
     <nz-form-label>试题图片</nz-form-label>
     <div>
-      <img [src]="question.imageUrl" />
+      <img [src]="http.getImageUrl(question.imageUrl)" />
     </div>
   </nz-space-item>
   <nz-space-item *ngIf="question.type === 1">

@@ -18,7 +18,7 @@ interface Answer {
   styleUrls: ['./question.component.less'],
 })
 export class StudentQuestionComponent implements OnInit {
-  constructor(private http: HttpService, private activatedRoute: ActivatedRoute) {}
+  constructor(public http: HttpService, private activatedRoute: ActivatedRoute) {}
   private courseId: number;
   private chapterId: number;
   private currentPage = 1;

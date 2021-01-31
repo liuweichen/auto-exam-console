@@ -2,7 +2,7 @@
   <h2>创建试卷</h2>
   <nz-space nzDirection="vertical">
     <nz-form-item>
-      <nz-form-label nzFor="status">所属课程</nz-form-label>
+      <nz-form-label nzRequired nzFor="status">所属课程</nz-form-label>
       <nz-form-control>
         <nz-select style="width: 360px" [(ngModel)]="selectCourse" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
           <nz-option *ngFor="let i of courseOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
@@ -10,7 +10,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-space-item>
-      <nz-form-label>试卷名称</nz-form-label>
+      <nz-form-label nzRequired>试卷名称</nz-form-label>
       <input type="text" nz-input placeholder="试卷名称" [(ngModel)]="name" />
     </nz-space-item>
     <nz-space-item>

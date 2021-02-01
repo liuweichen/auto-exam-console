@@ -24,7 +24,7 @@
       </nz-space-item>
       <nz-space-item>
         <nz-form-label class="not-required">试题图片</nz-form-label>
-        <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzFileType]="fileType">
+        <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload">
           <button nz-button [disabled]="imagesList.length > 0"><i nz-icon nzType="upload"></i>可选</button>
         </nz-upload>
       </nz-space-item>

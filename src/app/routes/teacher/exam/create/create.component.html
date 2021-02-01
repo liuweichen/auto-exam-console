@@ -1,25 +1,31 @@
 <div>
   <h2>创建试卷</h2>
-  <nz-space nzDirection="vertical">
-    <nz-form-item>
-      <nz-form-label nzRequired nzFor="status">所属课程</nz-form-label>
-      <nz-form-control>
-        <nz-select style="width: 360px" [(ngModel)]="selectCourse" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
-          <nz-option *ngFor="let i of courseOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-space-item>
-      <nz-form-label nzRequired>试卷名称</nz-form-label>
-      <input type="text" nz-input placeholder="试卷名称" [(ngModel)]="name" />
-    </nz-space-item>
-    <nz-space-item>
-      <nz-form-label>试卷介绍</nz-form-label>
-      <textarea type="text" nz-input nzAutosize placeholder="试卷介绍" [(ngModel)]="description"></textarea>
-    </nz-space-item>
-  </nz-space>
-  <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="cancle()">取消</button>
-    <button nz-button nzType="primary" (click)="ok()">确认</button>
-  </div>
+  <form nz-form [formGroup]="validateForm">
+    <nz-space nzDirection="vertical">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="所属课程必选!">
+          <nz-form-label nzRequired nzFor="status">所属课程</nz-form-label>
+          <nz-select style="width: 360px" formControlName="selectCourse" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
+            <nz-option *ngFor="let i of courseOptions" [nzLabel]="i.text" [nzValue]="i"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="试卷名称长度3到128!">
+          <nz-form-label nzRequired>试卷名称</nz-form-label>
+          <input type="text" nz-input formControlName="name" placeholder="试卷名称" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="试卷介绍长度最大为512!">
+          <nz-form-label>试卷介绍</nz-form-label>
+          <textarea type="text" nz-input nzAutosize formControlName="description" placeholder="试卷介绍"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-space>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="cancle()">取消</button>
+      <button nz-button nzType="primary" (click)="ok()">确认</button>
+    </div>
+  </form>
 </div>

@@ -1,17 +1,23 @@
 <div>
   <h2>创建课程</h2>
-  <nz-space nzDirection="vertical">
-    <nz-space-item>
-      <nz-form-label nzRequired>课程名称</nz-form-label>
-      <input type="text" nz-input placeholder="课程名称" [(ngModel)]="name" />
-    </nz-space-item>
-    <nz-space-item>
-      <nz-form-label>课程介绍</nz-form-label>
-      <textarea type="text" nz-input nzAutosize placeholder="课程介绍" [(ngModel)]="description"></textarea>
-    </nz-space-item>
-  </nz-space>
-  <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="cancle()">取消</button>
-    <button nz-button nzType="primary" (click)="ok()">确认</button>
-  </div>
+  <form nz-form [formGroup]="validateForm">
+    <nz-space nzDirection="vertical">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="课程名称长度3到128!">
+          <nz-form-label nzRequired>课程名称</nz-form-label>
+          <input type="text" nz-input formControlName="name" placeholder="课程名称" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="课程介绍长度最大为512!">
+          <nz-form-label>课程介绍</nz-form-label>
+          <textarea type="text" nz-input nzAutosize formControlName="description" placeholder="课程介绍"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-space>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="cancle()">取消</button>
+      <button nz-button nzType="primary" (click)="ok()">确认</button>
+    </div>
+  </form>
 </div>

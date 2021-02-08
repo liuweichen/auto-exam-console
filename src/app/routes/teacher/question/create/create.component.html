@@ -24,7 +24,7 @@
       </nz-space-item>
       <nz-space-item>
         <nz-form-label class="not-required">试题图片</nz-form-label>
-        <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload">
+        <nz-upload [(nzFileList)]="imagesList" [nzBeforeUpload]="beforeUpload" [nzRemove]="removeImage">
           <button nz-button [disabled]="imagesList.length > 0"><i nz-icon nzType="upload"></i>可选</button>
         </nz-upload>
       </nz-space-item>
@@ -85,6 +85,9 @@
         <div>
           <a *ngIf="imagesList[0]" [href]="imagesList[0].url" target="_blank">
             <img [src]="imagesList[0].url" />
+          </a>
+          <a *ngIf="imageLocalUrl" [href]="imageLocalUrl" target="_blank">
+            <img [src]="imageLocalUrl" />
           </a>
         </div>
       </nz-space-item>

@@ -8,6 +8,7 @@ import { HttpService } from 'src/app/core/http/http.service';
 import { Answer } from 'src/app/shared/model/Answer';
 import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teacher-create-question',
@@ -25,6 +26,7 @@ export class TeacherCreateQuestionComponent implements OnInit {
   selectChapter;
   chapterOptions = [];
   imageUrl;
+  imageLocalUrl;
   typeOptions = [
     {
       text: '单选',
@@ -41,7 +43,13 @@ export class TeacherCreateQuestionComponent implements OnInit {
   imagesList: NzUploadFile[] = [];
   private imageTypeList = ['image/png', 'image/jpeg', 'image/gif'];
   private updateImage = false;
-  constructor(private modal: NzModalRef, private http: HttpService, public msg: NzMessageService, public router: Router) {}
+  constructor(
+    private modal: NzModalRef,
+    private http: HttpService,
+    private sanitizer: DomSanitizer,
+    public msg: NzMessageService,
+    public router: Router,
+  ) {}
   ngOnInit(): void {
     this.http.getChapters().subscribe((res) => {
       this.chapterOptions = res.map((c) => {
@@ -171,7 +179,12 @@ export class TeacherCreateQuestionComponent implements OnInit {
   addInput(): void {
     this.answerList.push({});
   }
+  removeImage = (file: NzUploadFile) => {
+    delete this.imageLocalUrl;
+    return true;
+  };
   beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]) => {
+    this.imageLocalUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
     return new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = this.imageTypeList.includes(file.type);
       if (!isJpgOrPng) {

@@ -24,6 +24,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
       <input
         type="text"
         nz-input
+        readonly
         [(ngModel)]="q"
         [nzAutocomplete]="auto"
         (input)="search($event)"

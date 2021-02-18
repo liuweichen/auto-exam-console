@@ -64,16 +64,17 @@ export class TeacherImportQuestionComponent implements OnInit {
   }
   private getHttpJson(question: any): any {
     return {
-      type: question[0],
+      type: question[0] == '单选' ? 1 : question[0] == '多选' ? 2 : 1,
       content: question[1],
-      chapterId: question[2],
-      explanation: question[3],
+      imageUrl: question[2] ? question[2] : '',
+      chapterId: question[3],
+      explanation: question[4],
       answerList: this.getAnswerList(question),
     };
   }
   private getAnswerList(answers: any[]): any[] {
     const res: any[] = [];
-    for (let i = 4; i < answers.length - 1; i = i + 2) {
+    for (let i = 5; i < answers.length - 1; i = i + 2) {
       res.push({
         content: answers[i],
         isSelected: answers[i + 1],

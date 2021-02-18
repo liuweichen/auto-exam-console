@@ -104,6 +104,7 @@ export class TeacherQuestionComponent implements OnInit {
       [
         '试题类型',
         '试题题目',
+        '图片地址',
         '所属章节编号',
         '试题解析',
         '选项01',
@@ -120,8 +121,9 @@ export class TeacherQuestionComponent implements OnInit {
       .filter((q) => this.setOfCheckedId.has(q.id))
       .forEach((q) => {
         data.push([
-          q.type.toString(),
+          q.type == 1 ? '单选' : q.type == 2 ? '多选' : '未知',
           q.content,
+          q.imageUrl,
           q.chapterId.toString(),
           q.explanation,
           ...q.answerList
@@ -140,7 +142,7 @@ export class TeacherQuestionComponent implements OnInit {
           name: 'Sheet1',
         },
       ],
-      filename: new Date().toString() + '-export-questions.xlsx',
+      filename: `export-questions-${new Date().toString()}-file.xlsx`,
     });
   }
 

@@ -104,7 +104,11 @@ export class TeacherCreateQuestionComponent implements OnInit {
         return val;
       }
     });
+    if (!this.checkQuestionFiles()) {
+      return;
+    }
     if (this.questionId) {
+      this.uploading = true;
       this.http.updateQuestion(this.questionId, this.getHttpJson(this.questionId)).subscribe(() => {
         if (this.updateImage && this.imagesList.length > 0) {
           this.handleUpload(this.questionId).subscribe(
@@ -161,6 +165,52 @@ export class TeacherCreateQuestionComponent implements OnInit {
       answerList: this.answerList,
       imageUrl: this.imagesList.length > 0 ? this.getCloudFilePath(questionIdOrTimestamp, this.imagesList[0].name) : '',
     };
+  }
+  private checkQuestionFiles(): boolean {
+    if (!this.selectChapter?.value) {
+      this.msg.error('请选择试题所属章节');
+      return false;
+    }
+    if (!this.selectType?.value) {
+      this.msg.error('请选择试题类型');
+      return false;
+    }
+    if (!this.content || this.content.length < 1 || this.content.length > 1024) {
+      this.msg.error('试题内容长度范围为1-1024');
+      return false;
+    }
+    if (this.explanation && (this.explanation.length < 1 || this.explanation.length > 1024)) {
+      this.msg.error('试题解析长度范围为1-1024');
+      return false;
+    }
+    if (this.answerList?.length < 2 || this.answerList?.length > 10) {
+      this.msg.error('选项长度最少为2，最大为10');
+      return false;
+    }
+    if (
+      !this.answerList.every((a) => {
+        if (!a.content || a.content?.length < 1 || a.content?.length > 1024) {
+          return false;
+        } else {
+          return true;
+        }
+      })
+    ) {
+      this.msg.error('试题选项长度最少为1，最大为1024');
+      return false;
+    }
+    if (this.selectType.value == 1) {
+      if (this.answerList.filter((a) => a.isSelected).length != 1) {
+        this.msg.error('单选类型，有且只能有一个选择的选项');
+        return false;
+      }
+    } else if (this.selectType.value == 2) {
+      if (this.answerList.filter((a) => a.isSelected).length < 2) {
+        this.msg.error('多选类型，最少有两个选择的选项');
+        return false;
+      }
+    }
+    return true;
   }
   cancle(): void {
     this.modal.destroy({ data: 'cancle data' });

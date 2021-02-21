@@ -66,3 +66,13 @@
     <span class="color-red">{{ falseCount }}题</span>
   </span>
 </div>
+<div class="index-box">
+  <div
+    [ngClass]="{ 'gray-backgroud': currentGlobalIndex == index }"
+    (click)="nextQuestionByIndex(index)"
+    class="index-box-item"
+    *ngFor="let index of getAllIndex()"
+  >
+    {{ index }}
+  </div>
+</div>

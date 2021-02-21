@@ -33,6 +33,7 @@ export class StudentQuestionComponent implements OnInit {
   private questionIndex: number;
   private questionSize: number;
   private totalElements: number;
+  currentGlobalIndex = 1;
   question: any = {};
   showRightAnswer = false;
   rightAnster: Answer;
@@ -76,12 +77,31 @@ export class StudentQuestionComponent implements OnInit {
 
   lastQuestion(): void {
     this.questionIndex--;
+    this.currentGlobalIndex = (this.currentPage - 1) * this.pageSize + 1 + this.questionIndex;
     this.refreshQuestion();
   }
 
   nextQuestion(): void {
     this.questionIndex++;
+    this.currentGlobalIndex = (this.currentPage - 1) * this.pageSize + 1 + this.questionIndex;
     this.refreshQuestion();
+  }
+
+  nextQuestionByIndex(index): void {
+    let min = (this.currentPage - 1) * this.pageSize + 1;
+    let max = this.currentPage + this.pageSize;
+    if (index >= min && index <= max) {
+      this.questionIndex = (index - 1) % this.pageSize;
+      this.setQuestion(this.questionIndex);
+    } else {
+      this.currentPage = Math.floor((index - 1) / this.pageSize) + 1;
+      this.refresh();
+    }
+    this.currentGlobalIndex = index;
+  }
+
+  getAllIndex(): number[] {
+    return Array.from({ length: this.totalElements }, (_, i) => i + 1);
   }
 
   private refreshQuestion(): void {

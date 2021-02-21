@@ -1,57 +1,71 @@
 <page-header></page-header>
 
-<div *ngFor="let question of listOfData; let i = index">
-  <nz-space nzDirection="vertical">
-    <nz-space-item>
-      <nz-form-label>试题类型</nz-form-label>
-      <span>{{ question.type === 1 ? '单选' : question.type === 2 ? '多选' : '' }}</span>
-    </nz-space-item>
-    <nz-space-item>
-      <nz-form-label>试题题目</nz-form-label>
-      <div>
-        <span mathjax>{{ question.content }}</span>
-      </div>
-    </nz-space-item>
-    <nz-space-item *ngIf="question.imageUrl">
-      <nz-form-label>试题图片</nz-form-label>
-      <div>
-        <img [src]="http.getImageUrl(question.imageUrl)" />
-      </div>
-    </nz-space-item>
-    <nz-space-item *ngIf="question.type === 1">
-      <nz-form-label>选项</nz-form-label>
-      <div>
-        <nz-radio-group [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
-          <label mathjax nz-radio [nzValue]="i">{{ answer.content }} </label>
-        </nz-radio-group>
-      </div>
-    </nz-space-item>
-    <nz-space-item *ngIf="question.type === 2">
-      <nz-space nzDirection="vertical">
-        <nz-space-item>
-          <nz-form-label>选项</nz-form-label>
-          <nz-space-item *ngFor="let answer of question.answerList">
-            <label class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
-            {{ answer.content }}
-          </nz-space-item>
-        </nz-space-item>
-      </nz-space>
-    </nz-space-item>
-    <div *ngIf="submitFlag">
-      <nz-space-item>
-        <nz-form-label>答案</nz-form-label>
-        <div mathjax>
-          {{ question.rightAnswer ? question.rightAnswer.content : '' }}
-        </div>
-      </nz-space-item>
-      <nz-space-item>
-        <nz-form-label>解析</nz-form-label>
-        <div mathjax>
-          {{ question.explanation }}
-        </div>
-      </nz-space-item>
+<nz-space nzDirection="vertical">
+  <nz-space-item>
+    <nz-form-label>试题类型</nz-form-label>
+    <span>{{ question.type === 1 ? '单选' : question.type === 2 ? '多选' : '' }}</span>
+  </nz-space-item>
+  <nz-space-item>
+    <nz-form-label>试题题目</nz-form-label>
+    <div *ngFor="let content of [question.content]">
+      <span mathjax>{{ content }}</span>
     </div>
-  </nz-space>
-  <hr />
+  </nz-space-item>
+  <nz-space-item *ngIf="question.imageUrl">
+    <nz-form-label>试题图片</nz-form-label>
+    <div>
+      <img [src]="http.getImageUrl(question.imageUrl)" />
+    </div>
+  </nz-space-item>
+  <nz-space-item *ngIf="question.type === 1">
+    <nz-form-label>选项</nz-form-label>
+    <div>
+      <nz-radio-group [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
+        <label mathjax nz-radio [nzValue]="i">{{ answer.content }} </label>
+      </nz-radio-group>
+    </div>
+  </nz-space-item>
+  <nz-space-item *ngIf="question.type === 2">
+    <nz-space nzDirection="vertical">
+      <nz-space-item>
+        <nz-form-label>选项</nz-form-label>
+        <nz-space-item *ngFor="let answer of question.answerList">
+          <label class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
+          {{ answer.content }}
+        </nz-space-item>
+      </nz-space-item>
+    </nz-space>
+  </nz-space-item>
+  <div *ngIf="submitFlag">
+    <nz-space-item>
+      <nz-form-label>答案</nz-form-label>
+      <div mathjax>
+        {{ question.rightAnswer ? question.rightAnswer.content : '' }}
+      </div>
+    </nz-space-item>
+    <nz-space-item>
+      <nz-form-label>解析</nz-form-label>
+      <div mathjax>
+        {{ question.explanation }}
+      </div>
+    </nz-space-item>
+  </div>
+</nz-space>
+<div>
+  <button nz-button nzType="default" (click)="lastQuestion()">上一题</button>
+  <button nz-button nzType="primary" (click)="nextQuestion()">下一题</button>
 </div>
-<button nz-button nzType="primary" (click)="submit()">交卷</button>
+<br />
+<div class="index-box">
+  <div
+    [ngClass]="{ 'gray-backgroud': questionIndex + 1 == index }"
+    (click)="nextQuestionByIndex(index)"
+    class="index-box-item"
+    *ngFor="let index of getAllIndex()"
+  >
+    {{ index }}
+  </div>
+</div>
+<div>
+  <button nz-button nzType="primary" (click)="submit()">交卷</button>
+</div>

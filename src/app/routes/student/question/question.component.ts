@@ -30,15 +30,12 @@ export class StudentQuestionComponent implements OnInit {
   private chapterId: number;
   private currentPage = 1;
   private pageSize = 10;
-  private questionIndex: number;
-  private questionSize: number;
+  questionIndex: number;
   private totalElements: number;
-  currentGlobalIndex = 1;
   question: any = {};
   showRightAnswer = false;
   rightAnster: Answer;
   answerList: Answer[];
-  private totalPages: number;
   radioValue: number;
   listOfData: Question[] = [];
   autoNext = true;
@@ -48,7 +45,7 @@ export class StudentQuestionComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.chapterId = params.chapter_id;
       this.courseId = params.course_id;
-      this.refresh();
+      this.refresh(0);
     });
   }
 
@@ -76,28 +73,26 @@ export class StudentQuestionComponent implements OnInit {
   }
 
   lastQuestion(): void {
+    if (this.questionIndex == 0) {
+      this.msg.error('已经是第一题');
+      return;
+    }
     this.questionIndex--;
-    this.currentGlobalIndex = (this.currentPage - 1) * this.pageSize + 1 + this.questionIndex;
     this.refreshQuestion();
   }
 
   nextQuestion(): void {
+    if (this.questionIndex + 1 == this.totalElements) {
+      this.msg.error('已经是最后一题');
+      return;
+    }
     this.questionIndex++;
-    this.currentGlobalIndex = (this.currentPage - 1) * this.pageSize + 1 + this.questionIndex;
     this.refreshQuestion();
   }
 
   nextQuestionByIndex(index): void {
-    let min = (this.currentPage - 1) * this.pageSize + 1;
-    let max = this.currentPage + this.pageSize;
-    if (index >= min && index <= max) {
-      this.questionIndex = (index - 1) % this.pageSize;
-      this.setQuestion(this.questionIndex);
-    } else {
-      this.currentPage = Math.floor((index - 1) / this.pageSize) + 1;
-      this.refresh();
-    }
-    this.currentGlobalIndex = index;
+    this.questionIndex = index - 1;
+    this.refreshQuestion();
   }
 
   getAllIndex(): number[] {
@@ -105,15 +100,17 @@ export class StudentQuestionComponent implements OnInit {
   }
 
   private refreshQuestion(): void {
-    if (this.questionIndex >= this.questionSize || this.questionIndex < 0) {
-      this.currentPage = ((this.currentPage + 1) % this.totalPages) + 1;
-      this.refresh();
+    let min = (this.currentPage - 1) * this.pageSize;
+    let max = min + this.listOfData.length - 1;
+    if (this.questionIndex > max || this.questionIndex < min) {
+      this.refresh(this.questionIndex);
     } else {
       this.setQuestion(this.questionIndex);
     }
   }
 
-  private refresh(): void {
+  private refresh(questionIndex: number): void {
+    this.currentPage = Math.floor(questionIndex / this.pageSize) + 1;
     this.http.studentGetQuestions(this.courseId, this.chapterId, this.currentPage, this.pageSize).subscribe((res) => {
       this.totalElements = res.totalElements;
       if (this.totalElements == 0) {
@@ -122,15 +119,14 @@ export class StudentQuestionComponent implements OnInit {
         return;
       }
       this.listOfData = res.content;
-      this.totalPages = res.totalPages;
-      this.questionIndex = 0;
-      this.questionSize = this.listOfData.length;
+      this.questionIndex = questionIndex;
       this.setQuestion(this.questionIndex);
     });
   }
 
   private setQuestion(questionIndex: number): void {
-    this.question = this.listOfData[questionIndex];
+    let index = questionIndex % this.pageSize;
+    this.question = this.listOfData[index];
     this.answerList = this.question.answerList;
     this.rightAnster = this.answerList.find((ans) => ans.isSelected);
     delete this.radioValue;

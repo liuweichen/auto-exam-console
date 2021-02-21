@@ -68,7 +68,7 @@
 </div>
 <div class="index-box">
   <div
-    [ngClass]="{ 'gray-backgroud': currentGlobalIndex == index }"
+    [ngClass]="{ 'gray-backgroud': questionIndex + 1 == index }"
     (click)="nextQuestionByIndex(index)"
     class="index-box-item"
     *ngFor="let index of getAllIndex()"

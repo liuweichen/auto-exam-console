@@ -1,6 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Params } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpService } from 'src/app/core/http/http.service';
 import { Question } from 'src/app/shared/model/Question';
 
@@ -18,13 +20,19 @@ interface Answer {
   styleUrls: ['./question.component.less'],
 })
 export class StudentQuestionComponent implements OnInit {
-  constructor(public http: HttpService, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    public http: HttpService,
+    private activatedRoute: ActivatedRoute,
+    private msg: NzMessageService,
+    private location: Location,
+  ) {}
   private courseId: number;
   private chapterId: number;
   private currentPage = 1;
   private pageSize = 10;
   private questionIndex: number;
   private questionSize: number;
+  private totalElements: number;
   question: any = {};
   showRightAnswer = false;
   rightAnster: Answer;
@@ -87,6 +95,12 @@ export class StudentQuestionComponent implements OnInit {
 
   private refresh(): void {
     this.http.studentGetQuestions(this.courseId, this.chapterId, this.currentPage, this.pageSize).subscribe((res) => {
+      this.totalElements = res.totalElements;
+      if (this.totalElements == 0) {
+        this.msg.error('没有试题，请选择其他资源');
+        this.location.back();
+        return;
+      }
       this.listOfData = res.content;
       this.totalPages = res.totalPages;
       this.questionIndex = 0;

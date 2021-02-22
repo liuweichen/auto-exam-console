@@ -34,7 +34,6 @@ export class StudentQuestionComponent implements OnInit {
   private totalElements: number;
   question: any = {};
   showRightAnswer = false;
-  rightAnster: Answer;
   answerList: Answer[];
   radioValue: number;
   listOfData: Question[] = [];
@@ -119,6 +118,11 @@ export class StudentQuestionComponent implements OnInit {
         return;
       }
       this.listOfData = res.content;
+      this.listOfData.forEach((q) =>
+        q.answerList.forEach((a, index) => {
+          a.content = String.fromCharCode(index + 65) + ': ' + a.content;
+        }),
+      );
       this.questionIndex = questionIndex;
       this.setQuestion(this.questionIndex);
     });
@@ -128,7 +132,6 @@ export class StudentQuestionComponent implements OnInit {
     let index = questionIndex % this.pageSize;
     this.question = this.listOfData[index];
     this.answerList = this.question.answerList;
-    this.rightAnster = this.answerList.find((ans) => ans.isSelected);
     delete this.radioValue;
     this.showRightAnswer = false;
   }

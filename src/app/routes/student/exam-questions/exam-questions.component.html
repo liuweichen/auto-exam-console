@@ -39,14 +39,14 @@
   <div *ngIf="submitFlag">
     <nz-space-item>
       <nz-form-label>答案</nz-form-label>
-      <div mathjax>
-        {{ question.rightAnswer ? question.rightAnswer.content : '' }}
+      <div *ngFor="let answer of question.answerList">
+        <span *ngIf="answer.isSelected" mathjax>{{ answer.content }}</span>
       </div>
     </nz-space-item>
     <nz-space-item>
       <nz-form-label>解析</nz-form-label>
-      <div mathjax>
-        {{ question.explanation }}
+      <div *ngFor="let content of [question.explanation]">
+        <span mathjax>{{ content }}</span>
       </div>
     </nz-space-item>
   </div>

@@ -38,8 +38,8 @@
   <div *ngIf="showRightAnswer">
     <nz-space-item>
       <nz-form-label>答案</nz-form-label>
-      <div mathjax>
-        {{ rightAnster ? rightAnster.content : '' }}
+      <div *ngFor="let answer of question.answerList">
+        <span *ngIf="answer.isSelected" mathjax>{{ answer.content }}</span>
       </div>
     </nz-space-item>
     <nz-space-item>

@@ -68,7 +68,9 @@ export class StudentExamQuestionsComponent implements OnInit {
       this.question = this.listOfData[0];
     });
   }
-
+  cancelSubmit(): void {
+    this.msg.info('取消操作');
+  }
   submit(): void {
     this.submitFlag = true;
     this.listOfData.forEach(

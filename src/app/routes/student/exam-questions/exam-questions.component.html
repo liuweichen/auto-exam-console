@@ -58,7 +58,7 @@
 <br />
 <div class="index-box">
   <div
-    [ngClass]="{ 'gray-backgroud': questionIndex + 1 == index }"
+    [ngClass]="{ 'gray-backgroud': questionIndex + 1 == index, 'color-red': submitFlag && listOfData[index - 1].userRight }"
     (click)="nextQuestionByIndex(index)"
     class="index-box-item"
     *ngFor="let index of getAllIndex()"

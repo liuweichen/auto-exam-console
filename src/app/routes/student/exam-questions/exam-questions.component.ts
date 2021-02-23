@@ -71,5 +71,17 @@ export class StudentExamQuestionsComponent implements OnInit {
 
   submit(): void {
     this.submitFlag = true;
+    this.listOfData.forEach(
+      (q) =>
+        (q.userRight = !q.answerList.every((a, index) => {
+          if (q.type === 1) {
+            return a.isSelected ? q.radioValue === index : q.radioValue !== index;
+          } else if (q.type === 2) {
+            return a.isSelected ? a.userSelected === true : !a.userSelected;
+          } else {
+            return false;
+          }
+        })),
+    );
   }
 }

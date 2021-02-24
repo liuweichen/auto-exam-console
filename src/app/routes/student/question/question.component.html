@@ -7,16 +7,11 @@
   <nz-space-item>
     <nz-form-label>试题题目</nz-form-label>
     <div *ngFor="let content of [question.content]">
-      <span mathjax>{{ content }}</span>
+      <p mathjax>{{ content }}</p>
+      <img *ngIf="question.imageUrl" [src]="http.getImageUrl(question.imageUrl)" />
     </div>
   </nz-space-item>
-  <nz-space-item *ngIf="question.imageUrl">
-    <nz-form-label>试题图片</nz-form-label>
-    <div>
-      <img [src]="http.getImageUrl(question.imageUrl)" />
-    </div>
-  </nz-space-item>
-  <nz-space-item *ngIf="question.type === 1">
+  <nz-space-item class="select-box" *ngIf="question.type === 1">
     <nz-form-label>选项</nz-form-label>
     <div>
       <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
@@ -24,7 +19,7 @@
       </nz-radio-group>
     </div>
   </nz-space-item>
-  <nz-space-item *ngIf="question.type === 2">
+  <nz-space-item class="select-box" *ngIf="question.type === 2">
     <nz-space nzDirection="vertical">
       <nz-space-item>
         <nz-form-label>选项</nz-form-label>

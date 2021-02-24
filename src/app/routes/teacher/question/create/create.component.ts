@@ -218,15 +218,19 @@ export class TeacherCreateQuestionComponent implements OnInit {
   preview(on: Boolean): void {
     this.previewOn = on;
   }
-  removeInput(item: Answer): void {
-    const i = this.answerList.indexOf(item);
-    this.answerList.splice(i, 1);
-  }
   removeLastInput(): void {
+    if (this.answerList.length <= 2) {
+      this.msg.error('选项个数最少为2');
+      return;
+    }
     const i = this.answerList.length - 1;
     this.answerList.splice(i, 1);
   }
   addInput(): void {
+    if (this.answerList.length >= 10) {
+      this.msg.error('选项个数最多为10');
+      return;
+    }
     this.answerList.push({});
   }
   removeImage = (file: NzUploadFile) => {

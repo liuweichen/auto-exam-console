@@ -88,10 +88,11 @@ export class TeacherQuestionComponent implements OnInit {
         content: question.content,
         explanation: question.explanation,
         chapterId: question.chapterId,
-        answerList: question.answerList,
+        answerList: JSON.parse(JSON.stringify(question.answerList)),
         imageUrl: question.imageUrl,
       },
     });
+    console.log(question.answerList);
     modal.afterClose.subscribe((res) => {
       if (res?.data === 'ok') {
         this.refresh();

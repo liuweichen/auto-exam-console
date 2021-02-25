@@ -9,7 +9,7 @@
     <nz-form-label>试题题目</nz-form-label>
     <div *ngFor="let content of [question.content]">
       <p mathjax>{{ content }}</p>
-      <img *ngIf="question.imageUrl" [src]="http.getImageUrl(question.imageUrl)" />
+      <img nz-image *ngIf="question.imageUrl" [nzSrc]="http.getImageUrl(question.imageUrl)" />
     </div>
   </nz-space-item>
   <nz-space-item class="select-box" *ngIf="question.type === 1">

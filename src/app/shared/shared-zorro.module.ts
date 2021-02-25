@@ -29,6 +29,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 export const SHARED_ZORRO_MODULES = [
   NzFormModule,
@@ -62,4 +63,5 @@ export const SHARED_ZORRO_MODULES = [
   NzUploadModule,
   NzSpaceModule,
   NzCarouselModule,
+  NzImageModule,
 ];

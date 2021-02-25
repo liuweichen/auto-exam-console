@@ -14,8 +14,12 @@
   <nz-space-item class="select-box" *ngIf="question.type === 1">
     <nz-form-label>选项</nz-form-label>
     <div>
-      <nz-radio-group [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
-        <label mathjax nz-radio [nzValue]="i" (click)="selectAnswer(answer)">{{ answer.content }} </label>
+      <nz-radio-group [nzDisabled]="showRightAnswer" [(ngModel)]="radioValue" *ngFor="let answer of answerList; let i = index">
+        <label mathjax nz-radio [nzValue]="i" (click)="selectAnswer(answer)">
+          <span [ngClass]="{ 'color-green': showRightAnswer && answer.isSelected }">
+            {{ answer.content }}
+          </span>
+        </label>
       </nz-radio-group>
     </div>
   </nz-space-item>
@@ -24,19 +28,15 @@
       <nz-space-item>
         <nz-form-label>选项</nz-form-label>
         <nz-space-item *ngFor="let answer of answerList">
-          <label class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
-          {{ answer.content }}
+          <label [nzDisabled]="showRightAnswer" class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
+          <span [ngClass]="{ 'color-green': showRightAnswer && answer.isSelected }">
+            {{ answer.content }}
+          </span>
         </nz-space-item>
       </nz-space-item>
     </nz-space>
   </nz-space-item>
   <div *ngIf="showRightAnswer">
-    <nz-space-item>
-      <nz-form-label>答案</nz-form-label>
-      <div *ngFor="let answer of question.answerList">
-        <span *ngIf="answer.isSelected" mathjax>{{ answer.content }}</span>
-      </div>
-    </nz-space-item>
     <nz-space-item>
       <nz-form-label>解析</nz-form-label>
       <div mathjax>

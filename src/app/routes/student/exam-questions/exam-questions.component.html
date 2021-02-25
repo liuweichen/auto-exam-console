@@ -8,41 +8,36 @@
   <nz-space-item>
     <nz-form-label>试题题目</nz-form-label>
     <div *ngFor="let content of [question.content]">
-      <span mathjax>{{ content }}</span>
+      <p mathjax>{{ content }}</p>
+      <img *ngIf="question.imageUrl" [src]="http.getImageUrl(question.imageUrl)" />
     </div>
   </nz-space-item>
-  <nz-space-item *ngIf="question.imageUrl">
-    <nz-form-label>试题图片</nz-form-label>
-    <div>
-      <img [src]="http.getImageUrl(question.imageUrl)" />
-    </div>
-  </nz-space-item>
-  <nz-space-item *ngIf="question.type === 1">
+  <nz-space-item class="select-box" *ngIf="question.type === 1">
     <nz-form-label>选项</nz-form-label>
     <div>
-      <nz-radio-group [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
-        <label mathjax nz-radio [nzValue]="i">{{ answer.content }} </label>
+      <nz-radio-group [nzDisabled]="submitFlag" [(ngModel)]="question.radioValue" *ngFor="let answer of question.answerList; let i = index">
+        <label mathjax nz-radio [nzValue]="i">
+          <span [ngClass]="{ 'color-green': submitFlag && answer.isSelected }">
+            {{ answer.content }}
+          </span>
+        </label>
       </nz-radio-group>
     </div>
   </nz-space-item>
-  <nz-space-item *ngIf="question.type === 2">
+  <nz-space-item class="select-box" *ngIf="question.type === 2">
     <nz-space nzDirection="vertical">
       <nz-space-item>
         <nz-form-label>选项</nz-form-label>
         <nz-space-item *ngFor="let answer of question.answerList">
-          <label class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
-          {{ answer.content }}
+          <label [nzDisabled]="submitFlag" class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
+          <span [ngClass]="{ 'color-green': submitFlag && answer.isSelected }">
+            {{ answer.content }}
+          </span>
         </nz-space-item>
       </nz-space-item>
     </nz-space>
   </nz-space-item>
   <div *ngIf="submitFlag">
-    <nz-space-item>
-      <nz-form-label>答案</nz-form-label>
-      <div *ngFor="let answer of question.answerList">
-        <span *ngIf="answer.isSelected" mathjax>{{ answer.content }}</span>
-      </div>
-    </nz-space-item>
     <nz-space-item>
       <nz-form-label>解析</nz-form-label>
       <div *ngFor="let content of [question.explanation]">

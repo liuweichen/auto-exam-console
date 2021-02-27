@@ -83,12 +83,8 @@
       <nz-space-item>
         <nz-form-label class="not-required">试题图片</nz-form-label>
         <div>
-          <a *ngIf="imagesList[0]" [href]="imagesList[0].url" target="_blank">
-            <img nz-image [nzSrc]="imagesList[0].url" />
-          </a>
-          <a *ngIf="imageLocalUrl" [href]="imageLocalUrl" target="_blank">
-            <img nz-image [nzSrc]="imageLocalUrl" />
-          </a>
+          <img nz-image *ngIf="imagesList[0]" [nzSrc]="imagesList[0].url" />
+          <img nz-image *ngIf="imageLocalUrl" [nzSrc]="imageLocalUrl" />
         </div>
       </nz-space-item>
       <nz-space-item>

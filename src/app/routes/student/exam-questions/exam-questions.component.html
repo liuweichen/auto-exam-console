@@ -6,7 +6,7 @@
     <span>{{ question.type === 1 ? '单选' : question.type === 2 ? '多选' : '' }}</span>
   </nz-space-item>
   <nz-space-item>
-    <nz-form-label>试题题目</nz-form-label>
+    <nz-form-label>{{ questionIndex + 1 + '/' + listOfData.length + '、' }}试题题目</nz-form-label>
     <div *ngFor="let content of [question.content]">
       <p mathjax>{{ content }}</p>
       <img nz-image *ngIf="question.imageUrl" [nzSrc]="http.getImageUrl(question.imageUrl)" />
@@ -29,10 +29,11 @@
       <nz-space-item>
         <nz-form-label>选项</nz-form-label>
         <nz-space-item *ngFor="let answer of question.answerList">
-          <label [nzDisabled]="submitFlag" class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected"></label>
-          <span [ngClass]="{ 'color-green': submitFlag && answer.isSelected }">
-            {{ answer.content }}
-          </span>
+          <label [nzDisabled]="submitFlag" class="margin-right" nz-checkbox [(ngModel)]="answer.userSelected">
+            <span [ngClass]="{ 'color-green': submitFlag && answer.isSelected }">
+              {{ answer.content }}
+            </span>
+          </label>
         </nz-space-item>
       </nz-space-item>
     </nz-space>

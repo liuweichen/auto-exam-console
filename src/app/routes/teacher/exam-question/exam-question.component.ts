@@ -87,6 +87,7 @@ export class TeacherExamQuestionComponent implements OnInit {
   }
 
   importRow(): void {
+    this.msg.info('请到试题页面选择试题后添加到该试卷');
     this.router.navigateByUrl(`/teacher/questions`);
   }
 

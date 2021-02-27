@@ -15,8 +15,8 @@
     </nz-space-item>
     <nz-space-item>
       <nz-form-label>试题图片</nz-form-label>
-      <div>
-        <a *ngIf="imageUrl" [href]="imageUrl" target="_blank">
+      <div style="max-width: 200px; max-height: 200px">
+        <a *ngIf="imageUrl">
           <img nz-image [nzSrc]="imageUrl" />
         </a>
       </div>

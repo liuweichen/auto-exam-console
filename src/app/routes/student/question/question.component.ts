@@ -31,7 +31,7 @@ export class StudentQuestionComponent implements OnInit {
   private currentPage = 1;
   private pageSize = 10;
   questionIndex: number;
-  private totalElements: number;
+  totalElements: number;
   question: any = {};
   showRightAnswer = false;
   answerList: Answer[];
@@ -49,8 +49,16 @@ export class StudentQuestionComponent implements OnInit {
   }
 
   selectAnswer(answer: Answer): void {
+    if (this.showRightAnswer) {
+      return;
+    }
     setTimeout(() => {
-      answer.isSelected ? this.rightCount++ : this.falseCount++;
+      if (answer.isSelected) {
+        this.rightCount++;
+      } else {
+        this.falseCount++;
+        this.msg.error('答案错误');
+      }
       if (answer.isSelected && this.autoNext) {
         this.nextQuestion();
       } else {
@@ -62,7 +70,12 @@ export class StudentQuestionComponent implements OnInit {
   selectMutilAnswer(): void {
     setTimeout(() => {
       const isRight = this.answerList.filter((a) => (a.userSelected || a.isSelected) && a.isSelected !== a.userSelected).length === 0;
-      isRight ? this.rightCount++ : this.falseCount++;
+      if (isRight) {
+        this.rightCount++;
+      } else {
+        this.falseCount++;
+        this.msg.error('答案错误');
+      }
       if (isRight && this.autoNext) {
         this.nextQuestion();
       } else {
@@ -131,7 +144,7 @@ export class StudentQuestionComponent implements OnInit {
   private setQuestion(questionIndex: number): void {
     let index = questionIndex % this.pageSize;
     this.question = this.listOfData[index];
-    this.answerList = this.question.answerList;
+    this.answerList = JSON.parse(JSON.stringify(this.question.answerList));
     delete this.radioValue;
     this.showRightAnswer = false;
   }
